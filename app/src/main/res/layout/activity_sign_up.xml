@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".SignUpActivity">
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/btn_Signup"
+        android:gravity="center"
+        android:layout_marginTop="35dp"
+        android:textSize="35sp"
+        android:textStyle="bold"
+        android:fontFamily="@font/lato"
+        android:textColor="@color/text_dark_green"
+        />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="@string/signup_details"
+        android:gravity="center"
+        android:textSize="16sp"
+        android:fontFamily="@font/lato"
+        android:textColor="@color/text_dark_green"
+        />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:layout_marginTop="30dp">
+        <EditText
+            android:id="@+id/editTextName"
+            android:layout_width="325dp"
+            android:layout_height="55dp"
+            android:ems="10"
+            android:textSize="20sp"
+            android:background="@drawable/edittextshape"
+            android:hint="Name"
+            android:elevation="5dp"
+            android:drawablePadding="15dp"
+            android:paddingStart="15dp"
+            android:drawableLeft="@drawable/user"
+            android:inputType="text"
+            android:autofillHints=""
+            tools:ignore="RtlSymmetry" />
+
+        <EditText
+            android:id="@+id/editTextTextEmailAddress"
+            android:layout_width="325dp"
+            android:layout_height="55dp"
+            android:ems="10"
+            android:textSize="20sp"
+            android:background="@drawable/edittextshape"
+            android:hint="Email"
+            android:elevation="5dp"
+            android:drawablePadding="15dp"
+            android:paddingStart="15dp"
+            android:drawableStart="@drawable/mail"
+            android:inputType="textEmailAddress"
+            android:layout_marginTop="20dp"/>
+
+        <EditText
+            android:id="@+id/editTextTextPassword"
+            android:layout_width="325dp"
+            android:layout_height="55dp"
+            android:background="@drawable/edittextshape"
+            android:ems="10"
+            android:elevation="5dp"
+            android:drawablePadding="15dp"
+            android:paddingStart="15dp"
+            android:textSize="20sp"
+            android:drawableLeft="@drawable/lock"
+            android:hint="Password"
+            android:layout_marginTop="20dp"
+            android:inputType="textPassword" />
+        <androidx.appcompat.widget.AppCompatButton
+            android:layout_width="300dp"
+            android:layout_height="50dp"
+            android:id="@+id/btnSignup"
+            android:text="@string/btn_Signup"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            android:fontFamily="@font/lato"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:layout_marginTop="35dp"
+            android:padding="10dp"
+            android:background="@drawable/greenbuttongradient"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:layout_marginTop="35dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Or Sign Up With"
+            android:fontFamily="@font/lato"
+            android:textColor="@color/text_dark_green"
+            android:textSize="16sp"
+            android:layout_marginBottom="30dp"
+            />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:background="@drawable/redbutton"
+            android:layout_width="300dp"
+            android:layout_height="55dp"
+            android:id="@+id/btnGoogle"
+            android:text="@string/signup_google"
+            android:textColor="@color/white"
+            android:fontFamily="@font/lato"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:layout_marginTop="25dp"
+            android:padding="10dp"
+            android:textAllCaps="false"
+            android:backgroundTint="@color/red"
+            android:drawableLeft="@drawable/google"
+
+            />
+        <androidx.appcompat.widget.AppCompatButton
+            android:background="@drawable/bluebutton"
+            android:layout_width="300dp"
+            android:layout_height="55dp"
+            android:id="@+id/btnFacebook"
+            android:text="@string/signup_facebook"
+            android:textColor="@color/white"
+            android:fontFamily="@font/lato"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:textAllCaps="false"
+            android:backgroundTint="@color/blue"
+            android:drawableLeft="@drawable/facebook"
+            android:layout_marginTop="20dp"
+            android:padding="10dp"
+            />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_gravity="center"
+        android:gravity="end">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="@string/alreadyhaveacclogin"
+            android:gravity="center"
+            android:textColor="@color/text_dark_green"
+            android:layout_gravity="bottom"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:fontFamily="@font/lato"
+            android:id="@+id/tvlogin"
+            />
+    </LinearLayout>
+
+
+</LinearLayout>
