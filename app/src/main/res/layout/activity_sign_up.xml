@@ -65,7 +65,7 @@
             android:layout_marginTop="20dp"/>
 
         <EditText
-            android:id="@+id/editTextTextPassword"
+            android:id="@+id/editTextPassword"
             android:layout_width="325dp"
             android:layout_height="55dp"
             android:background="@drawable/edittextshape"

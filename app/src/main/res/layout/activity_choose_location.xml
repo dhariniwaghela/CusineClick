@@ -12,7 +12,7 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:padding="10dp"
-        android:layout_marginTop="50dp">
+        android:layout_marginTop="20dp">
 
         <TextView
             android:layout_width="match_parent"
@@ -27,46 +27,56 @@
             android:drawablePadding="15dp"
             app:drawableStartCompat="@drawable/location" />
 
-        <com.google.android.material.textfield.TextInputLayout
-            style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
-            android:layout_width="match_parent"
-            app:endIconDrawable="@drawable/arrow_down"
-            android:layout_height="55dp"
-            android:elevation="5dp"
-            app:boxStrokeWidth="0dp"
-            app:boxStrokeWidthFocused="0dp"
-            android:layout_margin="20dp"
-            android:background="@drawable/edittextshape"
-            android:id="@+id/chooselocation">
-
-            <AutoCompleteTextView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:id="@+id/locationlist"
-                android:inputType="none"
-                android:text="Choose Location"
-                android:fontFamily="@font/lato"
-                android:padding="5dp"
-                />
-        </com.google.android.material.textfield.TextInputLayout>
     </LinearLayout>
+
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="horizontal">
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="10dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="20dp">
 
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom"
+            style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            app:endIconDrawable="@drawable/arrow_down"
+            android:layout_height="60dp"
+            android:elevation="5dp"
+            app:boxStrokeWidth="0dp"
+            app:boxStrokeWidthFocused="0dp"
+            android:layout_margin="10dp"
+            android:hint="Select your Location"
+            android:textSize="22dp"
+            android:padding="5dp"
             android:fontFamily="@font/lato"
-            android:text="@string/locationdetails"
-            android:textColor="@color/text_dark_green"
-            android:layout_margin="20dp"
-            android:textSize="18dp"
-             />
-    </LinearLayout>
-
+            android:background="@drawable/edittextshape"
+            android:id="@+id/location"/>
 
 </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="bottom"
+            android:layout_marginBottom="25dp"
+            android:orientation="vertical">
+            <androidx.appcompat.widget.AppCompatButton
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:id="@+id/btnconfirm"
+                android:text="@string/confirm"
+                android:layout_margin="20dp"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                android:fontFamily="@font/lato"
+                android:textSize="20sp"
+                android:layout_marginTop="200dp"
+                android:textStyle="bold"
+                android:padding="10dp"
+                android:background="@drawable/greenbuttongradient"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+

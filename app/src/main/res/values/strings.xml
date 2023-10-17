@@ -27,4 +27,6 @@
 
     <string name="newpassword">New Password</string>
     <string name="createpwd">Create your new password here</string>
+    <string name="confirm">Confirm</string>
+    <string name="default_web_client_id">325309786586-80jio88oouiq2j02g5ujosa3cmuig2bv.apps.googleusercontent.com</string>
 </resources>

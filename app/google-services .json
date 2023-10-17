@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "325309786586",
+    "project_id": "cusineclick",
+    "storage_bucket": "cusineclick.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:325309786586:android:7cfd445e595f1ac5d6b8e3",
+        "android_client_info": {
+          "package_name": "com.example.cusineclick"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCwAmeSHUiNxPB466aYcPeydLs4N9dpTCU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
