@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    tools:context=".fragment.NotificationBotomFragment">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="5dp"
+        android:layout_marginBottom="5dp">
+        <ImageView
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginStart="8dp"
+            android:id="@+id/buttonBack"
+            android:layout_gravity="center"
+            android:background="@android:color/transparent"
+            android:src="@drawable/arrow_left"/>
+
+        <TextView
+            android:textSize="24sp"
+            android:gravity="center"
+            android:layout_marginTop="8dp"
+            android:fontFamily="@font/lato_bold"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Notifications"/>
+
+
+    </LinearLayout>
+<androidx.recyclerview.widget.RecyclerView
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="8dp"
+    android:id="@+id/notificationReylcerView"/>
+    </LinearLayout>

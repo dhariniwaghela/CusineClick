@@ -1,11 +1,11 @@
-package com.example.cusineclick.Fragment
+package com.example.cusineclick.fragment
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.denzcoskun.imageslider.constants.ScaleTypes
 import com.denzcoskun.imageslider.interfaces.ItemClickListener
@@ -29,6 +29,11 @@ class HomeFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
                 binding = FragmentHomeBinding.inflate(inflater , container , false)
+
+        binding.tvmenu.setOnClickListener {
+            val bottomSheetdialog = MenuBotomSheetFragment()
+            bottomSheetdialog.show(parentFragmentManager,tag)
+        }
         return binding.root
     }
 
@@ -50,7 +55,7 @@ class HomeFragment : Fragment() {
                 Toast.makeText(requireContext() , itemMessage , Toast.LENGTH_SHORT).show()
             }
         })
-        val foodName= listOf("burger","sandwich","momo","item")
+        val foodName= listOf("Burger","Sandwich","Momo","Item")
         val price = listOf("$5","$7","$9","$11")
         val popularFoodImages = listOf(R.drawable.menu1 , R.drawable.menu2 , R.drawable.menu3 , R.drawable.menu4)
         val adapter = PopularAdapter(foodName , price , popularFoodImages)

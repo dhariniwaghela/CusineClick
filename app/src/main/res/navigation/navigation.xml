@@ -22,7 +22,7 @@
         tools:layout="@layout/fragment_profile" />
     <fragment
         android:id="@+id/homeFragment"
-        android:name="com.example.cusineclick.Fragment.HomeFragment"
+        android:name="com.example.cusineclick.fragment.HomeFragment"
         android:label="fragment_home"
         tools:layout="@layout/fragment_home" />
     <fragment

@@ -6,15 +6,14 @@
     android:layout_height="match_parent"
     tools:context=".Fragment.CartFragment">
 
-    <!-- TODO: Update blank fragment layout -->
+
     <TextView
         android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
         android:fontFamily="@font/lato_bold"
-        android:text="cart"
-        android:textSize="24dp"
+        android:text="My Order"
+        android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -33,14 +32,17 @@
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/button"
-        android:layout_width="325dp"
-        android:layout_height="57dp"
-        android:layout_marginBottom="8dp"
-        android:background="@drawable/proceedbuttonshape"
-        android:fontFamily="@font/lato_black"
+        android:layout_width="300dp"
+        android:layout_height="50dp"
+        android:layout_marginBottom="10dp"
+        android:background="@drawable/greenbuttongradient"
+        android:fontFamily="@font/lato"
+        android:textStyle="bold"
         android:text="Proceed"
+        android:textSize="20sp"
         android:textAllCaps="false"
-        android:textColor="@color/text_green"
+        android:padding="10dp"
+        android:textColor="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />

@@ -62,9 +62,10 @@
             android:layout_marginBottom="25dp"
             android:orientation="vertical">
             <androidx.appcompat.widget.AppCompatButton
-                android:layout_width="match_parent"
+                android:layout_width="300dp"
                 android:layout_height="50dp"
                 android:id="@+id/btnconfirm"
+                android:layout_gravity="center"
                 android:text="@string/confirm"
                 android:layout_margin="20dp"
                 android:textAllCaps="false"

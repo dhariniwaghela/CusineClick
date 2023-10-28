@@ -1,23 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Fragment.HomeFragment">
+    android:weightSum="6"
+    android:orientation="vertical"
+    tools:context=".fragment.HomeFragment">
     <androidx.cardview.widget.CardView
         android:id="@+id/cardView"
         android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:layout_marginLeft="5dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginRight="5dp"
+        android:layout_height="0dp"
+        android:layout_weight="1.7"
+        android:padding="6dp"
+        android:layout_margin="6dp"
         android:clipToPadding="false"
-        app:cardCornerRadius="15dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:cardCornerRadius="15dp">
         <com.denzcoskun.imageslider.ImageSlider
             android:id="@+id/image_slider"
             android:layout_width="match_parent"
@@ -28,35 +26,43 @@
             app:iss_period="2000"
             app:iss_text_align="CENTER" />
     </androidx.cardview.widget.CardView>
+     <LinearLayout
+        android:layout_width="match_parent"
+         android:weightSum="2"
+        android:layout_height="0dp"
+        android:layout_weight="0.3"
+         android:gravity="center">
+        <TextView
+            android:id="@+id/text_view"
+            android:layout_width="0dp"
+            android:layout_weight="1.5"
+            android:layout_height="wrap_content"
+            android:text="Popular"
+            android:layout_marginStart="16dp"
+            android:textSize="24sp"
+            android:fontFamily="@font/lato_bold"
+           />
+
+        <TextView
+            android:id="@+id/tvmenu"
+            android:layout_width="0dp"
+            android:layout_weight="0.5"
+            android:layout_height="wrap_content"
+            android:elevation="5dp"
+            android:gravity="center"
+            android:fontFamily="@font/lato_bold"
+            android:text="Menu"
+            android:textSize="24sp"
+            />
+
+    </LinearLayout>
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/PopularRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_marginTop="16dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView2" />
-    <TextView
-        android:id="@+id/text_view"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:text="Popular"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/cardView" />
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="80dp"
-        android:layout_height="25dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="16dp"
-        android:background="@drawable/textviewshape"
-        android:elevation="5dp"
-        android:gravity="center"
-        android:text="ViewMenu"
-        android:textColor="@color/text_green"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/cardView" />
-</androidx.constraintlayout.widget.ConstraintLayout>
+        android:layout_margin="6dp"
+        android:layout_weight="4"
+        android:layout_marginTop="16dp" />
+
+</LinearLayout>

@@ -89,22 +89,23 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Or Login With"
+            android:text="@string/forgot_password"
             android:fontFamily="@font/lato"
             android:textColor="@color/text_dark_green"
             android:textSize="16sp"
+            android:textStyle="bold"
+            android:id="@+id/tvforgotpassword"
             android:layout_marginBottom="30dp"
             />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/forgot_password"
-            android:textStyle="bold"
+            android:text="Or Login With"
             android:fontFamily="@font/lato"
             android:textColor="@color/text_dark_green"
             android:textSize="16sp"
-            android:id="@+id/tvforgotpassword"
+
             />
 
         <androidx.appcompat.widget.AppCompatButton

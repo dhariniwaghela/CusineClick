@@ -6,8 +6,8 @@
     android:layout_height="wrap_content">
 
     <androidx.cardview.widget.CardView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="350dp"
+        android:layout_height="95dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="16dp"
@@ -64,7 +64,7 @@
                 android:layout_marginTop="-5dp"
                 android:layout_marginEnd="8dp"
                 android:background="@color/text_shadow_white"
-                android:src="@drawable/plus"
+                android:src="@drawable/add"
                 app:layout_constraintBottom_toBottomOf="@+id/cartItemQuantity"
                 app:layout_constraintEnd_toStartOf="@+id/cartItemQuantity"
                 app:layout_constraintTop_toTopOf="@+id/cartItemQuantity"
@@ -88,22 +88,11 @@
                 android:layout_marginTop="24dp"
                 android:layout_marginEnd="16dp"
                 android:background="@color/text_shadow_white"
-                android:src="@drawable/minus"
+                android:src="@drawable/delete"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <ImageButton
-                android:id="@+id/deleteButton"
-                android:layout_width="35dp"
-                android:layout_height="35dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginBottom="16dp"
-                android:background="@color/white"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="@+id/minusButton"
-                app:layout_constraintStart_toStartOf="@+id/plusButton"
-                app:layout_constraintTop_toBottomOf="@+id/minusButton"
-                app:srcCompat="@drawable/trash" />
+
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>
 </androidx.constraintlayout.widget.ConstraintLayout>

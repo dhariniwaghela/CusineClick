@@ -3,6 +3,7 @@ package com.example.cusineclick.adapter
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.example.cusineclick.R
 import com.example.cusineclick.databinding.CartItemBinding
 
 class CartAdapter (private val CartItems: MutableList<String> , private val CartItemPrice : MutableList<String> ,
@@ -35,13 +36,6 @@ private  val itemQuantites =IntArray(CartItems.size){1}
                plusButton.setOnClickListener {
                     increaseQuantity(position)
                }
-               deleteButton.setOnClickListener {
-                    val itemPosition = adapterPosition
-                   if (itemPosition != RecyclerView.NO_POSITION){
-                       deleteItem(itemPosition)
-                   }
-               }
-
            }
         }
         private fun decreseQuantity(position: Int){
@@ -49,11 +43,16 @@ private  val itemQuantites =IntArray(CartItems.size){1}
                 itemQuantites[position]--
                 binding.cartItemQuantity.text = itemQuantites[position].toString()
             }
+            else if(itemQuantites[position] == 1){
+                binding.minusButton.setImageResource(R.drawable.delete)
+                deleteItem(position)
+            }
         }
         private fun increaseQuantity(position: Int){
             if (itemQuantites[position] < 10){
                 itemQuantites[position]++
                 binding.cartItemQuantity.text = itemQuantites[position].toString()
+                binding.minusButton.setImageResource(R.drawable.minus)
             }
         }
         private fun deleteItem(position: Int){
