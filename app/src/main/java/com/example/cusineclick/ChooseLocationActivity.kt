@@ -11,7 +11,6 @@ import android.location.Location
 import android.location.LocationManager
 import android.os.Bundle
 import android.provider.Settings
-import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
@@ -37,7 +36,7 @@ class ChooseLocationActivity : AppCompatActivity() {
             getLocation()
         }
         binding.btnconfirm.setOnClickListener {
-            val intent = Intent(this, MainActivity::class.java)
+            val intent = Intent(this, MainActivity_demo::class.java)
             startActivity(intent)
         }
 
