@@ -1,14 +1,15 @@
 package com.example.cusineclick.Fragment
 
+import android.content.Intent
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.cusineclick.CheckOutActivity
 import com.example.cusineclick.R
 import com.example.cusineclick.adapter.CartAdapter
-import com.example.cusineclick.databinding.CartItemBinding
 import com.example.cusineclick.databinding.FragmentCartBinding
 
 class CartFragment : Fragment() {
@@ -21,6 +22,7 @@ class CartFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+
         binding=FragmentCartBinding.inflate(inflater,container,false)
         val cartFoodName = listOf("Burger","Sandwhich","Momo","Item","Manchurian","Sushi")
         val cartItemPrice = listOf("$5","$7","$10","$16","$4","$18")
@@ -35,6 +37,12 @@ class CartFragment : Fragment() {
         val adapter = CartAdapter(ArrayList(cartFoodName) , ArrayList(cartItemPrice) , ArrayList(cartImage))
         binding.cartRecyclerView.layoutManager = LinearLayoutManager(requireContext())
         binding.cartRecyclerView.adapter = adapter
+
+
+        binding.btnProceed.setOnClickListener(View.OnClickListener {
+            val intent = Intent (getActivity(), CheckOutActivity::class.java)
+            getActivity()?.startActivity(intent)
+        })
         return binding.root
     }
 

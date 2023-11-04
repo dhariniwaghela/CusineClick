@@ -55,7 +55,7 @@ class HomeFragment : Fragment() {
                 Toast.makeText(requireContext() , itemMessage , Toast.LENGTH_SHORT).show()
             }
         })
-        val foodName= listOf("Burger","Sandwich","Momo","Item")
+        val foodName= listOf("Burger","Sandwich","Momo","Chinese")
         val price = listOf("$5","$7","$9","$11")
         val popularFoodImages = listOf(R.drawable.menu1 , R.drawable.menu2 , R.drawable.menu3 , R.drawable.menu4)
         val adapter = PopularAdapter(foodName , price , popularFoodImages)

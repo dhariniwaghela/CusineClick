@@ -36,7 +36,7 @@ class ChooseLocationActivity : AppCompatActivity() {
             getLocation()
         }
         binding.btnconfirm.setOnClickListener {
-            val intent = Intent(this, MainActivity_demo::class.java)
+            val intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
         }
 

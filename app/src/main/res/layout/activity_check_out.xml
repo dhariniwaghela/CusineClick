@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/white"
+    android:weightSum="6"
+    tools:context=".CheckOutActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="5dp"
+        android:layout_marginTop="5dp"
+        android:gravity="center"
+        android:layout_marginBottom="5dp">
+        <ImageView
+            android:layout_width="24dp"
+            android:layout_height="match_parent"
+            android:layout_marginStart="8dp"
+            android:id="@+id/buttonBack"
+            android:layout_gravity="center"
+            android:background="@android:color/transparent"
+            android:src="@drawable/arrow_left"/>
+
+        <TextView
+            android:textSize="24sp"
+            android:gravity="center"
+            android:fontFamily="@font/lato_bold"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Edit"/>
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_weight="4.5">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:weightSum="3"
+            android:elevation="5dp"
+            android:padding="5dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/profileedittextshape">
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text= "Name"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:fontFamily="@font/lato"
+                android:layout_marginStart="5dp"
+                android:layout_weight="1"/>
+
+            <EditText
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:fontFamily="@font/lato"
+                android:id="@+id/edittxtName"
+                android:textSize="20sp"
+                android:background="@android:color/transparent"
+                android:hint="Name" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:weightSum="3"
+            android:padding="5dp"
+            android:elevation="5dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginTop="25dp"
+            android:background="@drawable/profileedittextshape">
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text= "Address"
+                android:textStyle="bold"
+                android:fontFamily="@font/lato"
+                android:textSize="20sp"
+                android:layout_marginStart="5dp"
+                android:layout_weight="1"/>
+
+            <EditText
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:fontFamily="@font/lato"
+                android:id="@+id/edittextAddress"
+                android:background="@android:color/transparent"
+                android:inputType="textMultiLine"
+                android:hint="To provide you with the best dining experience,we need your permission to access your device\'s location.By enabling location services, we can offer
+        personalized restaurant" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:weightSum="3"
+            android:padding="5dp"
+            android:elevation="5dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginTop="25dp"
+            android:background="@drawable/profileedittextshape">
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text= "Payment Method"
+                android:textStyle="bold"
+                android:fontFamily="@font/lato"
+                android:textSize="20sp"
+                android:layout_marginStart="5dp"
+                android:layout_weight="1.5"/>
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1.5"
+                android:id="@+id/paymentSpinner"
+                android:fontFamily="@font/lato"
+                android:background="@android:color/transparent"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:weightSum="3"
+            android:padding="5dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginTop="25dp"
+            android:elevation="5dp"
+            android:layout_marginBottom="5dp"
+
+            android:background="@drawable/profileedittextshape">
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text= "Total Amount"
+                android:textSize="20sp"
+                android:layout_weight="1.5"
+                android:textStyle="bold"
+                android:fontFamily="@font/lato"
+                android:layout_marginStart="5dp"
+                />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:id="@+id/edittextEmail"
+                android:textSize="20sp"
+                android:layout_weight="1.5"
+                android:textStyle="bold"
+                android:fontFamily="@font/lato"
+                android:layout_marginStart="5dp"
+                android:background="@android:color/transparent"
+                android:text="$35" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:layout_weight="0.5"
+        android:layout_gravity="bottom">
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/checkout"
+            android:layout_width="300dp"
+            android:layout_height="50dp"
+            android:layout_margin="8dp"
+            android:background="@drawable/greenbuttongradient"
+            android:fontFamily="@font/lato"
+            android:text="Place Order"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            />
+    </LinearLayout>
+
+
+</LinearLayout>

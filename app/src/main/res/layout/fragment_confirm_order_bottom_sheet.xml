@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center"
+    tools:context=".fragment.ConfirmOrderBottomSheetFragment">
+
+    <!-- TODO: Update blank fragment layout -->
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:textSize="32dp"
+        android:fontFamily="@font/lato_bold"
+        android:textColor="@color/text_dark_green"
+        android:text="Congrats ! Your Order Has Been Placed" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:src="@drawable/congratulation"/>
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btnHome"
+        android:layout_width="300dp"
+        android:layout_height="50dp"
+        android:background="@drawable/greenbuttongradient"
+        android:fontFamily="@font/lato"
+        android:textStyle="bold"
+        android:layout_marginTop="20dp"
+        android:text="Home"
+        android:textSize="20sp"
+        android:textAllCaps="false"
+        android:padding="10dp"
+        android:gravity="center"
+        android:layout_gravity="center"
+        android:textColor="@color/white"
+        />
+
+
+
+</LinearLayout>
