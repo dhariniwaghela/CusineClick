@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.example.cusineclick.databinding.ActivityCheckOutBinding
 import com.example.cusineclick.fragment.ConfirmOrderBottomSheetFragment
 
+
 class CheckOutActivity : AppCompatActivity() {
     private lateinit var binding: ActivityCheckOutBinding
 

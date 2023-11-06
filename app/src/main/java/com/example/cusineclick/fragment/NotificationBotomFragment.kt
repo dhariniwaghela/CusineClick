@@ -27,8 +27,8 @@ class NotificationBotomFragment : BottomSheetDialogFragment() {
             dismiss()
         }
 
-        val notification = listOf("Your order has been cancelled", "your order placed successfully","your order is on your way")
-        val notificationimgs = listOf(R.drawable.sademoji, R.drawable.sademoji, R.drawable.sademoji)
+        val notification = listOf("First Order $30 off", "Buy 1 Get 1 Free","Get First Order Delivery Free")
+        val notificationimgs = listOf(R.drawable.deal, R.drawable.deal, R.drawable.deal)
 
         val adapter = NotificationAdapter(ArrayList(notification), ArrayList(notificationimgs))
         binding.notificationReylcerView.layoutManager= LinearLayoutManager(requireContext())
