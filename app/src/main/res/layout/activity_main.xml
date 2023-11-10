@@ -61,6 +61,8 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:menu="@menu/menu" />
+            app:menu="@menu/menu"
+            android:background="@color/white"
+            app:elevation="10dp"/>
     </LinearLayout>
 </LinearLayout>

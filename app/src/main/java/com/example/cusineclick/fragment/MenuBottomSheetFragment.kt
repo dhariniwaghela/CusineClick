@@ -10,7 +10,7 @@ import com.example.cusineclick.adapter.MenuAdapter
 import com.example.cusineclick.databinding.FragmentMenuBottomSheetBinding
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 
-class MenuBotomSheetFragment : BottomSheetDialogFragment() {
+class MenuBottomSheetFragment : BottomSheetDialogFragment() {
     private lateinit var binding: FragmentMenuBottomSheetBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -37,7 +37,7 @@ class MenuBotomSheetFragment : BottomSheetDialogFragment() {
             R.drawable.menu5,
             R.drawable.menu6
         )
-        val adapter = MenuAdapter(ArrayList(MenuFoodName) , ArrayList(MenuItemPrice) , ArrayList(MenuImage))
+        val adapter = MenuAdapter(ArrayList(MenuFoodName) , ArrayList(MenuItemPrice) , ArrayList(MenuImage),requireContext())
         binding.menuRecyclerView.layoutManager = LinearLayoutManager(requireContext())
         binding.menuRecyclerView.adapter = adapter
         return binding.root
