@@ -1,15 +1,17 @@
 package com.example.cusineclick
 
+import androidx.appcompat.app.AppCompatActivity
+import android.os.Bundle
+
 import android.app.Activity
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.content.pm.PackageManager.GET_SIGNATURES
-import android.os.Bundle
 import android.util.Base64
 import android.util.Log
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.appcompat.app.AppCompatActivity
+import com.example.cusineclick.databinding.ActivityLoginAdminBinding
 import com.example.cusineclick.databinding.ActivityLoginBinding
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
@@ -24,9 +26,8 @@ import com.google.firebase.ktx.Firebase
 import java.security.MessageDigest
 import java.security.NoSuchAlgorithmException
 
+class LoginAdminActivity : AppCompatActivity() {
 
-@Suppress("DEPRECATION")
-class LoginActivity : AppCompatActivity() {
     private lateinit var email: String
     private lateinit var password: String
     private lateinit var auth: FirebaseAuth
@@ -34,9 +35,10 @@ class LoginActivity : AppCompatActivity() {
     private lateinit var googleSingInClient: GoogleSignInClient
 
 
-    private val binding: ActivityLoginBinding by lazy {
-        ActivityLoginBinding.inflate(layoutInflater)
+    private val binding: ActivityLoginAdminBinding by lazy {
+        ActivityLoginAdminBinding.inflate(layoutInflater)
     }
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -55,10 +57,10 @@ class LoginActivity : AppCompatActivity() {
 
 
         //login with email and password
-        binding.btnLogin.setOnClickListener {
+        binding.btnAdminLogin.setOnClickListener {
             //get data from fields
-            email = binding.editTextEmailAddress.text.toString().trim()
-            password = binding.editTextPassword.text.toString().trim()
+            email = binding.editTextAdminEmailAddress.text.toString().trim()
+            password = binding.editTextAdminPassword.text.toString().trim()
 
             if (email.isBlank() || password.isBlank()) {
                 Toast.makeText(this, "Please fill all details", Toast.LENGTH_SHORT).show()
@@ -67,8 +69,8 @@ class LoginActivity : AppCompatActivity() {
             }
 
         }
-        binding.tvsignup.setOnClickListener {
-            val signupintent = Intent(this, SignUpActivity::class.java)
+        binding.adminsignup.setOnClickListener {
+            val signupintent = Intent(this, SignUpAdminActivity::class.java)
             startActivity(signupintent)
         }
         binding.tvforgotpassword.setOnClickListener {
@@ -81,15 +83,7 @@ class LoginActivity : AppCompatActivity() {
             launcher.launch(signInIntent)
 
         }
-        binding.adminlogin.setOnClickListener {
-            val adminintent = Intent(this , LoginAdminActivity::class.java)
-            startActivity(adminintent)
-        }
-
-
-
     }
-
 
 
     private val launcher =

@@ -1,33 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".LoginActivity"
+    tools:context=".LoginAdminActivity"
     android:orientation="vertical">
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/btn_Login"
-        android:gravity="center"
         android:layout_marginTop="35dp"
-        android:textSize="35sp"
-        android:textStyle="bold"
         android:fontFamily="@font/lato"
+        android:gravity="center"
+        android:text="Admin Login"
         android:textColor="@color/text_dark_green"
-        />
+        android:textSize="35sp"
+        android:textStyle="bold" />
+
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
-        android:text="@string/login_details"
-        android:gravity="center"
-        android:textSize="16sp"
         android:fontFamily="@font/lato"
+        android:gravity="center"
+        android:text="Login To Your Admin Dashboard"
         android:textColor="@color/text_dark_green"
-        />
+        android:textSize="16sp" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -36,7 +36,7 @@
         android:gravity="center"
         android:layout_marginTop="35dp">
         <EditText
-            android:id="@+id/editTextEmailAddress"
+            android:id="@+id/editTextAdminEmailAddress"
             android:layout_width="325dp"
             android:layout_height="55dp"
             android:ems="10"
@@ -50,7 +50,7 @@
             android:inputType="textEmailAddress" />
 
         <EditText
-            android:id="@+id/editTextPassword"
+            android:id="@+id/editTextAdminPassword"
             android:layout_width="325dp"
             android:layout_height="55dp"
             android:background="@drawable/edittextshape"
@@ -66,7 +66,7 @@
         <androidx.appcompat.widget.AppCompatButton
             android:layout_width="300dp"
             android:layout_height="50dp"
-            android:id="@+id/btnLogin"
+            android:id="@+id/btnAdminLogin"
             android:text="@string/btn_Login"
             android:textAllCaps="false"
             android:textColor="@color/white"
@@ -152,30 +152,16 @@
         android:gravity="end">
 
         <TextView
-            android:layout_width="300dp"
-            android:layout_height="55dp"
-            android:text="@string/donthaveaccsignup"
-            android:gravity="center"
-            android:textColor="@color/text_dark_green"
-            android:layout_gravity="center"
-            android:textSize="16sp"
-            android:textStyle="bold"
-            android:id="@+id/tvsignup"
+            android:id="@+id/adminsignup"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="bottom"
             android:fontFamily="@font/lato"
-        />
-        <TextView
-            android:layout_width="300dp"
-            android:layout_height="55dp"
-            android:text="Are You An Admin? Click Here To Login"
             android:gravity="center"
+            android:text="Create An Admin Account"
             android:textColor="@color/text_dark_green"
-            android:layout_gravity="center"
             android:textSize="16sp"
-            android:textStyle="bold"
-            android:id="@+id/adminlogin"
-            android:fontFamily="@font/lato"
-            />
+            android:textStyle="bold" />
     </LinearLayout>
-
 
 </LinearLayout>

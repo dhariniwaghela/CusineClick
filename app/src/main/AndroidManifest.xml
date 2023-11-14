@@ -19,6 +19,18 @@
         android:theme="@style/Theme.CusineClick"
         tools:targetApi="31">
         <activity
+            android:name=".AddItemActivity"
+            android:exported="false" />
+        <activity
+            android:name=".AdminMainActivity"
+            android:exported="false" />
+        <activity
+            android:name=".SignUpAdminActivity"
+            android:exported="false" />
+        <activity
+            android:name=".LoginAdminActivity"
+            android:exported="false" />
+        <activity
             android:name=".FoodDetailsActivity"
             android:exported="false" />
         <activity

@@ -56,4 +56,6 @@ dependencies {
     implementation ("com.github.denzcoskun:ImageSlideshow:0.1.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
+    implementation ("com.facebook.android:facebook-login:5.15.3")
+
 }
