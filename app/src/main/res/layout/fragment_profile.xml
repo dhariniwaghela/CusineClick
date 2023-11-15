@@ -164,13 +164,13 @@
         android:layout_gravity="bottom">
 
         <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/submitdetails"
+            android:id="@+id/btnLogout"
             android:layout_width="300dp"
             android:layout_height="50dp"
             android:layout_margin="8dp"
             android:background="@drawable/greenbuttongradient"
             android:fontFamily="@font/lato"
-            android:text="Save Information"
+            android:text="Logout"
             android:textSize="20sp"
             android:textStyle="bold"
             android:textAllCaps="false"

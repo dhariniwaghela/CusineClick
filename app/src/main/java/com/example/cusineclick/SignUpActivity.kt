@@ -2,11 +2,11 @@ package com.example.cusineclick
 
 import android.app.Activity
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.appcompat.app.AppCompatActivity
 import com.example.cusineclick.databinding.ActivitySignUpBinding
 import com.example.cusineclick.model.UserModel
 import com.google.android.gms.auth.api.signin.GoogleSignIn
@@ -14,11 +14,13 @@ import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.GoogleAuthProvider
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.ktx.database
-import com.google.firebase.auth.GoogleAuthProvider
 import com.google.firebase.ktx.Firebase
+import java.util.regex.Pattern
+
 
 class SignUpActivity : AppCompatActivity() {
     private lateinit var email: String
@@ -31,6 +33,21 @@ class SignUpActivity : AppCompatActivity() {
 
     private val binding: ActivitySignUpBinding by lazy {
         ActivitySignUpBinding.inflate(layoutInflater)
+    }
+
+
+    val EMAIL_ADDRESS_PATTERN = Pattern.compile(
+        "[a-zA-Z0-9\\+\\.\\_\\%\\-\\+]{1,256}" +
+                "\\@" +
+                "[a-zA-Z0-9][a-zA-Z0-9\\-]{0,64}" +
+                "(" +
+                "\\." +
+                "[a-zA-Z0-9][a-zA-Z0-9\\-]{0,25}" +
+                ")+"
+    )
+
+    fun isValidString(str: String): Boolean {
+        return EMAIL_ADDRESS_PATTERN.matcher(str).matches()
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -55,7 +72,13 @@ class SignUpActivity : AppCompatActivity() {
             password = binding.editTextPassword.text.toString().trim()
 
             if (email.isEmpty() || password.isBlank() || username.isBlank()) {
-                Toast.makeText(this, "Please fill all details", Toast.LENGTH_SHORT).show()
+                binding.editTextName.error = "name should not be empty"
+                binding.editTextTextEmailAddress.error = "email should not be empty"
+                binding.editTextPassword.error = "Password should not be empty"
+            } else if (!isValidString(email)) {
+                binding.editTextTextEmailAddress.error = "Invalid email format"
+            } else if (password.length < 6) {
+                binding.editTextPassword.error = "Password must have atleast 6 caracters"
             } else {
                 createAccount(email, password)
             }
@@ -106,8 +129,10 @@ class SignUpActivity : AppCompatActivity() {
             if (task.isSuccessful) {
                 Toast.makeText(this, "Account Created Successfully", Toast.LENGTH_SHORT).show()
                 saveUserData()
-                val mainintent = Intent(this, ChooseLocationActivity::class.java)
-                startActivity(mainintent)
+
+                sendVerificationEmail()
+                // val mainintent = Intent(this, ChooseLocationActivity::class.java)
+                // startActivity(mainintent)
                 finish()
             } else {
                 Toast.makeText(this, "Account Creation Failed", Toast.LENGTH_SHORT).show()
@@ -129,6 +154,30 @@ class SignUpActivity : AppCompatActivity() {
         database.child("user").child(userId).setValue(user)
 
 
+    }
+
+    private fun sendVerificationEmail() {
+        val user = FirebaseAuth.getInstance().currentUser
+        user!!.sendEmailVerification()
+            .addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    // email sent
+
+                    // after email is sent just logout the user and finish this activity
+                    Toast.makeText(this, "Verification link has been send", Toast.LENGTH_SHORT)
+                        .show()
+                    startActivity(Intent(this, VerifyEmailActivity::class.java))
+                    finish()
+                } else {
+                    // email not sent, so display message and restart the activity or do whatever you wish to do
+
+                    //restart this activity
+                    overridePendingTransition(0, 0)
+                    finish()
+                    overridePendingTransition(0, 0)
+                    startActivity(intent)
+                }
+            }
     }
 
 }

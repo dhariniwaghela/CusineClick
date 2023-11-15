@@ -19,6 +19,9 @@
         android:theme="@style/Theme.CusineClick"
         tools:targetApi="31">
         <activity
+            android:name=".VerifyEmailActivity"
+            android:exported="false" />
+        <activity
             android:name=".AddItemActivity"
             android:exported="false" />
         <activity

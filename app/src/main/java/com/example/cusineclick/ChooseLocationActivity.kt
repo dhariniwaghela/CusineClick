@@ -117,4 +117,6 @@ class ChooseLocationActivity : AppCompatActivity() {
             requestPermissions()
         }
     }
+
+
 }

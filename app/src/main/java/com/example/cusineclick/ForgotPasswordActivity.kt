@@ -1,22 +1,36 @@
 package com.example.cusineclick
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import com.example.cusineclick.databinding.ActivityForgotPasswordBinding
-import com.example.cusineclick.databinding.ActivityLoginBinding
+import com.google.firebase.auth.FirebaseAuth
 
 class ForgotPasswordActivity : AppCompatActivity() {
     private val binding: ActivityForgotPasswordBinding by lazy{
         ActivityForgotPasswordBinding.inflate(layoutInflater )
 
     }
+    private lateinit var auth: FirebaseAuth
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
-        binding.btnsave.setOnClickListener {
-            val mainintent=Intent(this, StartActivity::class.java)
-            startActivity(mainintent)
+        auth = FirebaseAuth.getInstance()
+
+        binding.btnReset.setOnClickListener {
+            val email = binding.editTextEmail.text.toString()
+            auth.sendPasswordResetEmail(email).addOnCompleteListener {
+                Toast.makeText(this,"Link Has been send to Reset the Password",Toast.LENGTH_LONG).show()
+                finish()
+                val mainintent=Intent(this, LoginActivity::class.java)
+                startActivity(mainintent)
+
+            }
+                .addOnFailureListener{
+
+            }
+
         }    }
 }
