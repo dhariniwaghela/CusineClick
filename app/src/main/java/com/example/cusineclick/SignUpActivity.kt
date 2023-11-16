@@ -107,7 +107,7 @@ class SignUpActivity : AppCompatActivity() {
                     val credential = GoogleAuthProvider.getCredential(account?.idToken, null)
                     auth.signInWithCredential(credential).addOnCompleteListener { task ->
                         if (task.isSuccessful) {
-                            startActivity(Intent(this, ChooseLocationActivity::class.java))
+                            startActivity(Intent(this, MainActivity::class.java))
                             finish()
                         } else {
                             Toast.makeText(this, "Sign in Failed", Toast.LENGTH_SHORT).show()
@@ -164,9 +164,11 @@ class SignUpActivity : AppCompatActivity() {
                     // email sent
 
                     // after email is sent just logout the user and finish this activity
-                    Toast.makeText(this, "Verification link has been send", Toast.LENGTH_SHORT)
-                        .show()
-                    startActivity(Intent(this, VerifyEmailActivity::class.java))
+                    Toast.makeText(this, "Verification link has been send", Toast.LENGTH_SHORT).show()
+                    val intent = Intent(this, VerifyEmailActivity::class.java)
+                    intent.putExtra("email",email)
+                    intent.putExtra("name",username)
+                    startActivity(intent)
                     finish()
                 } else {
                     // email not sent, so display message and restart the activity or do whatever you wish to do

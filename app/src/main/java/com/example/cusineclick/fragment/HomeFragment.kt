@@ -31,7 +31,7 @@ class HomeFragment : Fragment() {
                 binding = FragmentHomeBinding.inflate(inflater , container , false)
 
         binding.tvmenu.setOnClickListener {
-            val bottomSheetdialog = MenuBottomSheetFragment()
+            val bottomSheetdialog = MenuBotomSheetFragment()
             bottomSheetdialog.show(parentFragmentManager,tag)
         }
         return binding.root
@@ -61,7 +61,10 @@ class HomeFragment : Fragment() {
         val adapter = PopularAdapter(foodName , price , popularFoodImages,requireContext())
         binding.PopularRecyclerView.layoutManager = LinearLayoutManager(requireContext())
         binding.PopularRecyclerView.adapter = adapter
+
     }
     companion object {
     }
+
+
 }

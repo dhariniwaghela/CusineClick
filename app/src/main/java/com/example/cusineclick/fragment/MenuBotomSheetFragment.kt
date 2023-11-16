@@ -10,7 +10,7 @@ import com.example.cusineclick.adapter.MenuAdapter
 import com.example.cusineclick.databinding.FragmentMenuBottomSheetBinding
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 
-class MenuBottomSheetFragment : BottomSheetDialogFragment() {
+class MenuBotomSheetFragment : BottomSheetDialogFragment() {
     private lateinit var binding: FragmentMenuBottomSheetBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {

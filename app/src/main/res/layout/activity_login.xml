@@ -163,18 +163,7 @@
             android:id="@+id/tvsignup"
             android:fontFamily="@font/lato"
         />
-        <TextView
-            android:layout_width="300dp"
-            android:layout_height="55dp"
-            android:text="Are You An Admin? Click Here To Login"
-            android:gravity="center"
-            android:textColor="@color/text_dark_green"
-            android:layout_gravity="center"
-            android:textSize="16sp"
-            android:textStyle="bold"
-            android:id="@+id/adminlogin"
-            android:fontFamily="@font/lato"
-            />
+
     </LinearLayout>
 
 

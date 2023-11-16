@@ -23,6 +23,7 @@ class ChooseLocationActivity : AppCompatActivity() {
 
     private lateinit var clientLocation: FusedLocationProviderClient
     private val permissionId = 2
+    private var locationString: String? = null
 
     private val binding: ActivityChooseLocationBinding by lazy {
         ActivityChooseLocationBinding.inflate(layoutInflater)
@@ -36,8 +37,15 @@ class ChooseLocationActivity : AppCompatActivity() {
             getLocation()
         }
         binding.btnconfirm.setOnClickListener {
-            val intent = Intent(this, MainActivity::class.java)
-            startActivity(intent)
+            if(locationString!=null) {
+                val intent = Intent(this, MainActivity::class.java)
+                intent.putExtra("location",locationString)
+                startActivity(intent)
+                finish()
+            }
+            else{
+                Toast.makeText(this, "Choose Location", Toast.LENGTH_SHORT).show()
+            }
         }
 
     }
@@ -103,8 +111,8 @@ class ChooseLocationActivity : AppCompatActivity() {
                             val feature = list?.get(0)?.featureName.toString()
                             val throughfare = list?.get(0)?.thoroughfare.toString()
                             val locality = list?.get(0)?.locality.toString()
-                            binding.location.text = feature + " " + throughfare + " " + locality
-
+                            locationString = "$feature $throughfare"
+                            binding.location.text = "$feature $throughfare $locality"
                         }
                     }
                 }
@@ -112,6 +120,7 @@ class ChooseLocationActivity : AppCompatActivity() {
                 Toast.makeText(this, "Please turn on location", Toast.LENGTH_LONG).show()
                 val intent = Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS)
                 startActivity(intent)
+                finish()
             }
         } else {
             requestPermissions()

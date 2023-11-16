@@ -38,6 +38,7 @@ class ProfileFragment : Fragment() {
 
                 Toast.makeText(activity, "Logout Successful !", Toast.LENGTH_SHORT).show()
             })
+
         return binding.root
     }
 

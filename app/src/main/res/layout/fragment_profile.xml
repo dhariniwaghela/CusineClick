@@ -49,7 +49,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="2"
             android:fontFamily="@font/lato"
-            android:id="@+id/edittextName"
+            android:id="@+id/etName"
             android:background="@android:color/transparent"
             android:hint="Name" />
     </LinearLayout>
@@ -80,7 +80,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="2"
             android:fontFamily="@font/lato"
-            android:id="@+id/edittextAddress"
+            android:id="@+id/etAddress"
             android:background="@android:color/transparent"
             android:inputType="textMultiLine"
             android:hint="To provide you with the best dining experience,we need your permission to access your device\'s location.By enabling location services, we can offer
@@ -139,6 +139,7 @@
             android:textSize="20sp"
             android:layout_weight="1"
             android:textStyle="bold"
+            android:id="@+id/tvemail"
             android:fontFamily="@font/lato"
             android:layout_marginStart="5dp"
             />
@@ -149,7 +150,7 @@
             android:layout_weight="2"
             android:inputType="textEmailAddress"
             android:fontFamily="@font/lato"
-            android:id="@+id/edittextEmail"
+            android:id="@+id/etEmail"
             android:background="@android:color/transparent"
             android:hint="Email Address" />
     </LinearLayout>

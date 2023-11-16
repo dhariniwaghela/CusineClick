@@ -39,7 +39,9 @@ class MenuAdapter(private val menuitemsName: List<String>, private val menuitemp
                 }
 
             })
+
         }
+
 
         fun bind(position: Int) {
             binding.apply {
@@ -48,7 +50,6 @@ class MenuAdapter(private val menuitemsName: List<String>, private val menuitemp
                 menuimage.setImageResource(menuImage[position])
 
             }
-
 
         }
 
@@ -63,4 +64,5 @@ class MenuAdapter(private val menuitemsName: List<String>, private val menuitemp
         requireContext.startActivity(intent)
 
     }
+
 }

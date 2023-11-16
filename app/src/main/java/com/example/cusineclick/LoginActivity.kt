@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
+import com.example.cusineclick.Fragment.ProfileFragment
 import com.example.cusineclick.databinding.ActivityLoginBinding
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
@@ -28,6 +29,7 @@ class LoginActivity : AppCompatActivity() {
     private lateinit var database: FirebaseDatabase
     private lateinit var googleSingInClient: GoogleSignInClient
 
+    val fragobj = ProfileFragment()
 
     private val binding: ActivityLoginBinding by lazy {
         ActivityLoginBinding.inflate(layoutInflater)
@@ -50,6 +52,7 @@ class LoginActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
+
         val googleSignInOptions = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
             .requestIdToken(getString(R.string.default_web_client_id)).requestEmail().build()
 
@@ -95,17 +98,8 @@ class LoginActivity : AppCompatActivity() {
             launcher.launch(signInIntent)
 
         }
-        binding.adminlogin.setOnClickListener {
-            val adminintent = Intent(this , LoginAdminActivity::class.java)
-            startActivity(adminintent)
-        }
-
-
-
 
     }
-
-
 
     private val launcher =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
@@ -116,7 +110,8 @@ class LoginActivity : AppCompatActivity() {
                     val credential = GoogleAuthProvider.getCredential(account?.idToken, null)
                     auth.signInWithCredential(credential).addOnCompleteListener { task ->
                         if (task.isSuccessful) {
-                            startActivity(Intent(this, ChooseLocationActivity::class.java))
+                            val intnet =Intent(this, MainActivity::class.java)
+                            startActivity(intent)
                             finish()
                         } else {
                             Toast.makeText(this, "Login Failed", Toast.LENGTH_SHORT).show()
@@ -148,7 +143,7 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun updateUi(user: FirebaseUser?) {
-        val mainintent = Intent(this, ChooseLocationActivity::class.java)
+        val mainintent = Intent(this, MainActivity::class.java)
         startActivity(mainintent)
         finish()
     }
