@@ -10,7 +10,7 @@ import com.example.cusineclick.adapter.NotificationAdapter
 import com.example.cusineclick.databinding.FragmentNotificationBottomBinding
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 
-class NotificationBotomFragment : BottomSheetDialogFragment() {
+class BottomNotificationFragment : BottomSheetDialogFragment() {
     private lateinit var binding: FragmentNotificationBottomBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {

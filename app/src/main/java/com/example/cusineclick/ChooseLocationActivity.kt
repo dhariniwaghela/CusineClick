@@ -2,6 +2,7 @@ package com.example.cusineclick
 
 import android.Manifest
 import android.annotation.SuppressLint
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -38,9 +39,10 @@ class ChooseLocationActivity : AppCompatActivity() {
         }
         binding.btnconfirm.setOnClickListener {
             if(locationString!=null) {
-                val intent = Intent(this, MainActivity::class.java)
-                intent.putExtra("location",locationString)
-                startActivity(intent)
+                val resultIntent = Intent();
+// TODO Add extras or a data URI to this intent as appropriate.
+                resultIntent.putExtra("location", locationString);
+                setResult(/* resultCode = */ Activity.RESULT_OK, /* data = */ resultIntent);
                 finish()
             }
             else{
