@@ -16,8 +16,14 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import com.example.cusineclick.databinding.ActivityChooseLocationBinding
+import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.ktx.database
+import com.google.firebase.ktx.Firebase
 import java.util.*
 
 class ChooseLocationActivity : AppCompatActivity() {
@@ -25,6 +31,9 @@ class ChooseLocationActivity : AppCompatActivity() {
     private lateinit var clientLocation: FusedLocationProviderClient
     private val permissionId = 2
     private var locationString: String? = null
+    private lateinit var auth: FirebaseAuth
+    private lateinit var database: DatabaseReference
+    private lateinit var googleSingInClient: GoogleSignInClient
 
     private val binding: ActivityChooseLocationBinding by lazy {
         ActivityChooseLocationBinding.inflate(layoutInflater)
@@ -43,6 +52,14 @@ class ChooseLocationActivity : AppCompatActivity() {
 // TODO Add extras or a data URI to this intent as appropriate.
                 resultIntent.putExtra("location", locationString);
                 setResult(/* resultCode = */ Activity.RESULT_OK, /* data = */ resultIntent);
+                //initialize firebase database
+                auth = Firebase.auth
+                //initialize database
+                database = Firebase.database.reference
+                val userId = FirebaseAuth.getInstance().currentUser!!.uid
+                //save user data
+                database.child("user").child(userId).child("location").setValue(locationString)
+
                 finish()
             }
             else{

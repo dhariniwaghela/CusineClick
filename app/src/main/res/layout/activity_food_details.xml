@@ -9,28 +9,18 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="5dp"
-        android:layout_marginBottom="5dp">
+        android:layout_height="wrap_content">
+
         <ImageView
+            android:id="@+id/buttonBack"
             android:layout_width="24dp"
             android:layout_height="24dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginStart="8dp"
-            android:id="@+id/buttonBack"
             android:layout_gravity="center"
-            android:background="@android:color/transparent"
-            android:src="@drawable/arrow_left"/>
-
-        <TextView
-            android:textSize="24sp"
-            android:gravity="center"
-            android:id="@+id/tv_foodname"
+            android:layout_marginStart="20dp"
             android:layout_marginTop="8dp"
-            android:fontFamily="@font/lato_bold"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Food Name"/>
+            android:layout_marginBottom="8dp"
+            android:background="@android:color/transparent"
+            android:src="@drawable/arrow_left" />
 
     </LinearLayout>
 
@@ -38,85 +28,134 @@
         android:id="@+id/cardView"
         android:layout_width="match_parent"
         android:layout_height="180dp"
+        android:layout_marginStart="5dp"
         android:layout_marginTop="5dp"
+        android:layout_marginEnd="5dp"
         android:layout_marginBottom="5dp"
-        android:layout_marginStart="20dp"
-        android:layout_marginEnd="20dp"
         app:cardCornerRadius="15dp">
 
         <ImageView
             android:id="@+id/food_image"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            />
+            android:layout_height="match_parent" />
 
     </androidx.cardview.widget.CardView>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
         android:layout_marginStart="20dp"
-        android:layout_marginEnd="20dp">
-    <TextView
-        android:textSize="24sp"
-        android:layout_marginTop="5dp"
-        android:fontFamily="@font/lato_bold"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Description"/>
+        android:layout_marginEnd="20dp"
+        android:orientation="vertical">
 
-    <TextView
-        android:textSize="16sp"
-        android:id="@+id/tv_foodDescription"
-        android:layout_marginTop="5dp"
-        android:fontFamily="@font/lato_bold"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/food_details"
-       />
+        <TextView
+            android:id="@+id/tvFoodname"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/lato_bold"
+            android:padding="5dp"
+            android:text="Food name"
+            android:textColor="@color/black"
+            android:textSize="28sp" />
+
     </LinearLayout>
+
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
         android:layout_marginStart="20dp"
-        android:layout_marginEnd="20dp">
-        <TextView
-            android:textSize="24sp"
-            android:layout_marginTop="5dp"
-            android:fontFamily="@font/lato_bold"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Ingredients"/>
+        android:layout_marginEnd="20dp"
+        android:orientation="vertical">
 
         <TextView
-            android:textSize="16sp"
-            android:layout_marginTop="5dp"
-            android:fontFamily="@font/lato_bold"
+            android:id="@+id/tv_foodCalories"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/tv_foodingredients"
-           android:text="@string/ingredients"/>
+            android:fontFamily="@font/lato_bold"
+            android:hint="100 cal"
+            android:layout_marginTop="5dp"
+            android:padding="3dp"
+            android:textSize="22sp" />
+
+        <TextView
+            android:id="@+id/tv_foodCategory"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/lato"
+            android:hint="Vegetarien"
+            android:layout_marginTop="5dp"
+            android:padding="3dp"
+            android:textSize="22sp"
+
+            />
+
+        <TextView
+            android:id="@+id/tv_foodPrice"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/lato_bold"
+            android:padding="3dp"
+            android:text="CA $19.99"
+            android:layout_marginTop="5dp"
+            android:textColor="@color/black"
+            android:textSize="24sp" />
+
+        <TextView
+            android:id="@+id/tv_foodDescription"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/lato"
+            android:padding="5dp"
+            android:layout_marginTop="5dp"
+            android:text="@string/food_details"
+            android:textSize="20sp" />
+
     </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginTop="5dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/lato_bold"
+            android:padding="3dp"
+            android:text="Ingredients"
+            android:textSize="22sp" />
+
+        <TextView
+            android:id="@+id/tv_foodingredients"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="3dp"
+            android:fontFamily="@font/lato"
+            android:text="@string/ingredients"
+            android:textSize="20sp" />
+    </LinearLayout>
+
+
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btnAddToCart"
         android:layout_width="300dp"
         android:layout_height="50dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="20dp"
         android:background="@drawable/greenbuttongradient"
         android:fontFamily="@font/lato"
-        android:textStyle="bold"
-        android:layout_marginTop="20dp"
-        android:text="Add to Cart"
-        android:textSize="20sp"
-        android:textAllCaps="false"
-        android:padding="10dp"
         android:gravity="center"
-        android:layout_gravity="center"
+        android:padding="10dp"
+        android:text="Add to Cart"
+        android:textAllCaps="false"
         android:textColor="@color/white"
-        />
-
+        android:textSize="20sp"
+        android:textStyle="bold" />
 
 
 </LinearLayout>

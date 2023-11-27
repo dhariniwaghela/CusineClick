@@ -38,7 +38,7 @@
                     android:layout_marginStart="16dp"
                     android:fontFamily="@font/lato_bold"
                     android:text="Food Name"
-                    android:textSize="16sp"
+                    android:textSize="18sp"
                     android:layout_gravity="center"
                     android:textColor="@color/black"
                     />
@@ -64,13 +64,14 @@
                 <TextView
                     android:id="@+id/tv_addToCartMenu"
                     android:layout_width="wrap_content"
-                    android:layout_height="20dp"
+                    android:layout_height="25dp"
                     android:layout_marginTop="16dp"
                     android:background="@drawable/addtocartshape"
                     android:fontFamily="@font/lato"
                     android:gravity="center"
                     android:textSize="14sp"
                     android:text="Add To Cart"
+                    android:padding="5dp"
                     android:textColor="@color/white" />
             </LinearLayout>
         </LinearLayout>

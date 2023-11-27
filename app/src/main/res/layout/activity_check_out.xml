@@ -62,12 +62,12 @@
                 android:layout_marginStart="5dp"
                 android:layout_weight="1"/>
 
-            <EditText
+            <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="2"
                 android:fontFamily="@font/lato"
-                android:id="@+id/edittxtName"
+                android:id="@+id/tvName"
                 android:textSize="20sp"
                 android:background="@android:color/transparent"
                 android:hint="Name" />
@@ -94,12 +94,12 @@
                 android:layout_marginStart="5dp"
                 android:layout_weight="1"/>
 
-            <EditText
+            <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="2"
                 android:fontFamily="@font/lato"
-                android:id="@+id/edittextAddress"
+                android:id="@+id/tvAddress"
                 android:background="@android:color/transparent"
                 android:inputType="textMultiLine"
                 android:hint="To provide you with the best dining experience,we need your permission to access your device\'s location.By enabling location services, we can offer
@@ -163,12 +163,13 @@
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:id="@+id/edittextEmail"
+                android:id="@+id/tvAmount"
                 android:textSize="20sp"
                 android:layout_weight="1.5"
                 android:textStyle="bold"
                 android:fontFamily="@font/lato"
                 android:layout_marginStart="5dp"
+                android:allowClickWhenDisabled="false"
                 android:background="@android:color/transparent"
                 android:text="$35" />
         </LinearLayout>

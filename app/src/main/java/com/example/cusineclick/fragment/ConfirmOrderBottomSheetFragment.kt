@@ -21,7 +21,6 @@ class ConfirmOrderBottomSheetFragment : BottomSheetDialogFragment() {
     ): View? {
         // Inflate the layout for this fragment
         binding= FragmentConfirmOrderBottomSheetBinding.inflate(inflater,container,false)
-
             binding.btnHome.setOnClickListener(View.OnClickListener {
                 val intent = Intent (getActivity(), MainActivity::class.java)
                 getActivity()?.startActivity(intent)

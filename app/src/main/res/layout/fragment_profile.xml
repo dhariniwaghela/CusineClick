@@ -5,173 +5,158 @@
     android:layout_height="match_parent"
     tools:context=".Fragment.ProfileFragment"
     android:background="@color/white"
-    android:orientation="vertical"
-    android:weightSum="6">
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="wrap_content"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:fontFamily="@font/lato_bold"
-        android:text="Profile"
-        android:layout_gravity="center"
-        android:layout_margin="8dp"
-        android:textSize="24sp"/>
-<LinearLayout
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:layout_weight="4.5">
+    android:orientation="vertical">
+
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="56dp"
-        android:gravity="center"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginStart="20dp">
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/lato_bold"
+            android:text="Account Info"
+            android:padding="5dp"
+            android:textSize="28sp"/>
+        <de.hdodenhof.circleimageview.CircleImageView
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/profile_image"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:src="@drawable/profile"
+            app:civ_border_width="4dp"
+            android:padding="10dp"
+            app:civ_border_color="@color/grey_font"/>
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:weightSum="3"
-        android:elevation="5dp"
-        android:padding="5dp"
-        android:layout_marginStart="10dp"
-        android:layout_marginEnd="10dp"
+        android:layout_marginStart="20dp">
+        <TextView
+            android:layout_width="0dp"
+            android:layout_weight="2.5"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/lato_bold"
+            android:text="Basic Info"
+            android:padding="5dp"
+            android:layout_gravity="center"
+            android:textSize="26sp"/>
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/btnEdit"
+            android:layout_width="0dp"
+            android:layout_weight="0.5"
+            android:layout_height="match_parent"
+            android:src="@drawable/pen"
+           android:padding="2dp"
+            app:civ_border_width="1dp"
+            android:layout_marginEnd="10dp"
+            app:civ_border_color="@color/grey_font"/>
+        />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
         android:layout_marginTop="10dp"
-        android:background="@drawable/profileedittextshape">
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:text= "Name"
-            android:textSize="20sp"
-            android:textStyle="bold"
-            android:fontFamily="@font/lato"
-            android:layout_marginStart="5dp"
-            android:layout_weight="1"/>
+        android:padding="5dp"
+        android:layout_marginStart="20dp">
 
-        <EditText
-            android:layout_width="0dp"
+        <TextView
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="2"
+            android:fontFamily="@font/lato_bold"
+            android:text="Name"
+
+            android:layout_gravity="center"
+            android:textColor="@color/black"
+            android:textSize="20sp"/>
+        <TextView
+            android:id="@+id/textViewName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:fontFamily="@font/lato"
-            android:id="@+id/etName"
-            android:background="@android:color/transparent"
-            android:hint="Name" />
+            android:layout_gravity="center"
+            android:hint="Name of User"
+            android:textColor="@color/grey_font"
+            android:textSize="20sp"/>
+
     </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center"
-        android:orientation="horizontal"
-        android:weightSum="3"
+        android:orientation="vertical"
+        android:layout_marginTop="10dp"
         android:padding="5dp"
-        android:elevation="5dp"
-        android:layout_marginStart="10dp"
-        android:layout_marginEnd="10dp"
-        android:layout_marginTop="25dp"
-        android:background="@drawable/profileedittextshape">
+        android:layout_marginStart="20dp">
+
         <TextView
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text= "Address"
-            android:textStyle="bold"
-            android:fontFamily="@font/lato"
-            android:textSize="20sp"
-            android:layout_marginStart="5dp"
-            android:layout_weight="1"/>
-
-        <EditText
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="2"
-            android:fontFamily="@font/lato"
-            android:id="@+id/etAddress"
-            android:background="@android:color/transparent"
-            android:inputType="textMultiLine"
-            android:hint="To provide you with the best dining experience,we need your permission to access your device\'s location.By enabling location services, we can offer
-        personalized restaurant" />
-    </LinearLayout>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="56dp"
-        android:gravity="center"
-        android:orientation="horizontal"
-        android:weightSum="3"
-        android:padding="5dp"
-        android:elevation="5dp"
-        android:layout_marginStart="10dp"
-        android:layout_marginEnd="10dp"
-        android:layout_marginTop="25dp"
-        android:background="@drawable/profileedittextshape">
+            android:fontFamily="@font/lato_bold"
+            android:text="Address"
+            android:layout_gravity="center"
+            android:textColor="@color/black"
+            android:textSize="20sp"/>
         <TextView
-            android:layout_width="0dp"
+            android:id="@+id/textViewAddress"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text= "Contact"
-            android:textStyle="bold"
             android:fontFamily="@font/lato"
-            android:textSize="20sp"
-            android:layout_marginStart="5dp"
-            android:layout_weight="1"/>
+            android:layout_gravity="center"
+            android:hint="Address of User"
+            android:textColor="@color/grey_font"
+            android:textSize="20sp"/>
 
-        <EditText
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="2"
-            android:id="@+id/edittexContact"
-            android:fontFamily="@font/lato"
-            android:inputType="phone"
-            android:background="@android:color/transparent"
-            android:hint="Contact Number" />
     </LinearLayout>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="56dp"
-        android:gravity="center"
-        android:orientation="horizontal"
-        android:weightSum="3"
-        android:padding="5dp"
-        android:layout_marginStart="10dp"
-        android:layout_marginEnd="10dp"
-        android:layout_marginTop="25dp"
-        android:elevation="5dp"
-        android:layout_marginBottom="5dp"
-
-        android:background="@drawable/profileedittextshape">
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:text= "EmailId"
-            android:textSize="20sp"
-            android:layout_weight="1"
-            android:textStyle="bold"
-            android:id="@+id/tvemail"
-            android:fontFamily="@font/lato"
-            android:layout_marginStart="5dp"
-            />
-
-        <EditText
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="2"
-            android:inputType="textEmailAddress"
-            android:fontFamily="@font/lato"
-            android:id="@+id/etEmail"
-            android:background="@android:color/transparent"
-            android:hint="Email Address" />
-    </LinearLayout>
-
-</LinearLayout>
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center"
-        android:layout_weight="0.5"
-        android:layout_gravity="bottom">
+        android:orientation="vertical"
+        android:layout_marginStart="20dp"
+        android:padding="5dp"
+        android:layout_marginTop="10dp">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/lato_bold"
+            android:text="EmailI"
+            android:layout_gravity="center"
+            android:textColor="@color/black"
+            android:textSize="20sp"/>
+        <TextView
+            android:id="@+id/textViewEmail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/lato"
+            android:layout_gravity="center"
+            android:hint="Email Address "
+            android:textColor="@color/grey_font"
+            android:textSize="20sp"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center_horizontal"
+        android:layout_gravity="center">
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btnLogout"
             android:layout_width="300dp"
             android:layout_height="50dp"
-            android:layout_margin="8dp"
             android:background="@drawable/greenbuttongradient"
             android:fontFamily="@font/lato"
             android:text="Logout"
+          android:layout_gravity="center"
             android:textSize="20sp"
             android:textStyle="bold"
             android:textAllCaps="false"

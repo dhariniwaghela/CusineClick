@@ -1,56 +1,80 @@
-
 package com.example.cusineclick.adapter
+
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
+import android.net.Uri
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.example.cusineclick.FoodDetailsActivity
 import com.example.cusineclick.databinding.PopularItemBinding
-class PopularAdapter (private val items : List<String> ,
-                      private val price : List<String>, private  val image: List<Int>,private val requireContext: Context) : RecyclerView.Adapter<PopularAdapter.PopularViewHolder>() {
+import com.example.cusineclick.model.PopularMenuItem
+
+class PopularAdapter(
+    private val popularmenuitems: List<PopularMenuItem>,
+    private val requireContext: Context
+) : RecyclerView.Adapter<PopularAdapter.PopularViewHolder>() {
 
 
+    @SuppressLint("SuspiciousIndentation")
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PopularViewHolder {
         val binding = PopularItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return PopularViewHolder(binding)
     }
 
+    override fun getItemCount(): Int = popularmenuitems.size
+
     override fun onBindViewHolder(holder: PopularViewHolder, position: Int) {
-        val item = items[position]
-        val images = image[position]
-        val price = price[position]
-        holder.bind(item, price, images)
+        holder.bind(position)
+    }
 
-        holder.itemView.setOnClickListener(View.OnClickListener {
+    inner class PopularViewHolder(private val binding: PopularItemBinding) :
+        RecyclerView.ViewHolder(binding.root) {
 
-            val intent = Intent(requireContext, FoodDetailsActivity::class.java)
-            intent.putExtra("MenuItemName", item)
-            intent.putExtra("MenuItemImage", images)
+        init {
+            binding.root.setOnClickListener(View.OnClickListener {
+                val position = adapterPosition
+                if (position != RecyclerView.NO_POSITION) {
+                    openIteminDetailsActivity(position)
+                }
+
+            })
+
+        }
+
+        private fun openIteminDetailsActivity(position: Int) {
+            val popularMenuItem = popularmenuitems[position]
+            //create intent to open menu item detail activity
+            val intent = Intent(requireContext, FoodDetailsActivity::class.java).apply {
+                putExtra("MenuItemName", popularMenuItem.itemName)
+                putExtra("MenuItemImg", popularMenuItem.itemImage)
+                putExtra("MenuItemDesc", popularMenuItem.itemDescriptions)
+                putExtra("MenuItemIngredient", popularMenuItem.itemIngredients)
+                putExtra("MenuItemPrice", popularMenuItem.itemPrice)
+                putExtra("MenuItemCategory", popularMenuItem.itemCategory)
+                putExtra("MenuItemCalories", popularMenuItem.itemCalories)
+            }
+            //start activity
             requireContext.startActivity(intent)
 
-        })
-    }
+        }
 
-    override fun getItemCount(): Int {
-        return items.size
-    }
 
-    class PopularViewHolder(private val binding: PopularItemBinding) :
-        RecyclerView.ViewHolder(binding.root) {
-        private val imagesView = binding.foodImagePopular
+        //set data into recycler view of food name,image and price
+        fun bind(position: Int) {
+            val popularmenuItem = popularmenuitems[position]
+            binding.apply {
+                foodNamePopular.text = popularmenuItem.itemName
+                foodPricePopular.text = "$${popularmenuItem.itemPrice}"
+                val uri = Uri.parse(popularmenuItem.itemImage)
+                Glide.with(requireContext).load(uri).into(foodImagePopular)
 
-        fun bind(item: String, price: String, images: Int) {
-            binding.foodNamePopular.text = item
-            binding.foodPricePopular.text = price
-            imagesView.setImageResource(images)
+            }
+
         }
 
     }
-
-    internal interface SendMessage {
-        fun sendData(foodname: String, foodprice:Int, foodImage: Int)
-    }
-
 }

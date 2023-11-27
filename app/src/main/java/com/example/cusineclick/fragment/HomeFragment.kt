@@ -8,15 +8,23 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.denzcoskun.imageslider.constants.ScaleTypes
-import com.denzcoskun.imageslider.interfaces.ItemClickListener
 import com.denzcoskun.imageslider.models.SlideModel
-import com.example.cusineclick.R
 import com.example.cusineclick.adapter.PopularAdapter
 import com.example.cusineclick.databinding.FragmentHomeBinding
+import com.example.cusineclick.model.PopularMenuItem
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
+
 
 class HomeFragment : Fragment() {
 
     private lateinit var binding: FragmentHomeBinding
+    private lateinit var database: FirebaseDatabase
+    private lateinit var popularitems: MutableList<PopularMenuItem>
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -28,42 +36,78 @@ class HomeFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-                binding = FragmentHomeBinding.inflate(inflater , container , false)
+        binding = FragmentHomeBinding.inflate(inflater, container, false)
+        database = FirebaseDatabase.getInstance()
 
         binding.tvmenu.setOnClickListener {
             val bottomSheetdialog = MenuBotomSheetFragment()
-            bottomSheetdialog.show(parentFragmentManager,tag)
+            bottomSheetdialog.show(parentFragmentManager, tag)
         }
+        retrievePopularMenuItems()
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val imageList = ArrayList<SlideModel>()
-        imageList.add(SlideModel(R.drawable.banner1, ScaleTypes.FIT))
-        imageList.add(SlideModel(R.drawable.banner2,ScaleTypes.FIT))
-        imageList.add(SlideModel(R.drawable.banner3,ScaleTypes.FIT))
         val imageSlider = binding.imageSlider
-        imageSlider.setImageList(imageList)
-        imageSlider.setImageList(imageList, ScaleTypes.FIT)
-        imageSlider.setItemClickListener(object : ItemClickListener {
-            override fun doubleClick(position: Int) {
+        database.reference.child("Banner")
+            .addListenerForSingleValueEvent(object : ValueEventListener {
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    for (bannerSnapshot in snapshot.children) {
+                       imageList.add(SlideModel(bannerSnapshot.child("bannerImage").value.toString(),ScaleTypes.FIT))
+                        imageSlider.setImageList(imageList,ScaleTypes.FIT)
+                    }
+                }
+                override fun onCancelled(error: DatabaseError) {
+                    Toast.makeText(requireContext(),error.message,Toast.LENGTH_SHORT).show()
+                }
+
+            }) }
+
+    private fun retrievePopularMenuItems() {
+
+        val foodRef: DatabaseReference = database.reference.child("menu")
+        popularitems = mutableListOf()
+        foodRef.addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                for (foodsnapshot in snapshot.children) {
+                    val popularMenuItem = foodsnapshot.getValue(PopularMenuItem::class.java)
+                    popularMenuItem?.let {
+                        popularitems.add(it)
+                    }
+                    //display random popular items
+                    randomPopularItems()
+
+                }
             }
-            override fun onItemSelected(position: Int) {
-                val itemPosition = imageList[position]
-                val itemMessage = "Selected Image $position"
-                Toast.makeText(requireContext() , itemMessage , Toast.LENGTH_SHORT).show()
+
+
+            override fun onCancelled(error: DatabaseError) {
+                TODO("Not yet implemented")
             }
+
         })
-        val foodName= listOf("Burger","Sandwich","Momo","Chinese")
-        val price = listOf("$5","$7","$9","$11")
-        val popularFoodImages = listOf(R.drawable.menu1 , R.drawable.menu2 , R.drawable.menu3 , R.drawable.menu4)
-        val adapter = PopularAdapter(foodName , price , popularFoodImages,requireContext())
-        binding.PopularRecyclerView.layoutManager = LinearLayoutManager(requireContext())
-        binding.PopularRecyclerView.adapter = adapter
 
     }
-    companion object {
+
+    //random popular item function
+    private fun randomPopularItems() {
+        //create shuffle list for popular item
+
+        val index = popularitems.indices.toList().shuffled()
+        val numofItem = 2
+        val subsetmenuitem = index.take(numofItem).map { popularitems[it] }
+
+        //once data add set it to adapter
+        setPopularitemAdapter(subsetmenuitem)
+
+    }
+
+    private fun setPopularitemAdapter(subsetmenuitem: List<PopularMenuItem>) {
+        val adapter = PopularAdapter(subsetmenuitem, requireContext())
+        binding.popularRecyclerView.layoutManager = LinearLayoutManager(requireContext())
+        binding.popularRecyclerView.adapter = adapter
     }
 
 
