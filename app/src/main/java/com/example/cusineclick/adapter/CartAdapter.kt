@@ -107,10 +107,9 @@ class CartAdapter(
         }
 
         private fun deleteItem(position: Int) {
-           val positionRetrive = position
-            getUniqueKeyAtPosition(positionRetrive){uniqueKey ->
-                if (uniqueKey != null){
-                    removeItem(position,uniqueKey)
+            getUniqueKeyAtPosition(position) { uniqueKey ->
+                if (uniqueKey != null) {
+                    removeItem(position, uniqueKey)
                 }
             }
 
