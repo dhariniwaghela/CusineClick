@@ -96,7 +96,7 @@ class HomeFragment : Fragment() {
         //create shuffle list for popular item
 
         val index = popularitems.indices.toList().shuffled()
-        val numofItem = 2
+        val numofItem = 5
         val subsetmenuitem = index.take(numofItem).map { popularitems[it] }
 
         //once data add set it to adapter
