@@ -27,6 +27,7 @@ class CartAdapter(
     //firebase instance
     private val auth = FirebaseAuth.getInstance()
     private var itemQuantities: IntArray = intArrayOf()
+    private lateinit var cartItemRef: DatabaseReference
 
     fun updateList(cartItem: MutableList<CartItem>) {
         cartitems = cartItem
@@ -35,15 +36,11 @@ class CartAdapter(
     }
 
 
-    companion object {
-        private lateinit var cartItemRef: DatabaseReference
-    }
-
     //get updated quantity
     init {
         val database = FirebaseDatabase.getInstance()
         val userId = auth.currentUser?.uid ?: ""
-        cartItemRef = database.reference.child("user").child(userId).child("CartItems")
+        cartItemRef = database.reference.child("User").child(userId).child("CartItems")
         itemQuantities = IntArray(cartitems.size) { 1 }
     }
 
@@ -73,7 +70,6 @@ class CartAdapter(
                 Glide.with(context).load(uri).into(cartImage)
 
                 minusButton.setOnClickListener {
-
                 }
                 plusButton.setOnClickListener {
                 }

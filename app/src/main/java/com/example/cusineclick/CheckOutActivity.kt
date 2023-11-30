@@ -1,6 +1,7 @@
 package com.example.cusineclick
 
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import com.example.cusineclick.databinding.ActivityCheckOutBinding
 import com.example.cusineclick.fragment.ConfirmOrderBottomSheetFragment
@@ -22,6 +23,7 @@ class CheckOutActivity : AppCompatActivity() {
     private lateinit var databaseReference: DatabaseReference
     private lateinit var userinfo: UserModel
     private lateinit var uid: String
+    private var total: Double = 0.0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,36 +37,70 @@ class CheckOutActivity : AppCompatActivity() {
             getUserData()
         }
 
-        val totalAmount = intent.getDoubleExtra("total",0.0)
+        val totalAmount = intent.getDoubleExtra("total", 0.0)
         binding.tvAmount.text = "CA$ $totalAmount"
 
         val df = DecimalFormat("0.00")
         val res: Double = totalAmount / 100.0f * 5.25
         binding.tvTax.text = "CA$ ${df.format(res)}"
-        val total:Double = totalAmount + res
+        total =totalAmount + res
         binding.tvTotal.text = "CA$${df.format(total)}"
+
         binding.btncheckout.setOnClickListener {
+            transferdata()
             val bottomSheetFragment = ConfirmOrderBottomSheetFragment()
             bottomSheetFragment.show(supportFragmentManager, "Test")
-            transferdata()
+
         }
     }
 
     private fun transferdata() {
-        val sourceRef = databaseReference.child(uid).child("CartItem")
+        val sourceRef = databaseReference.child(uid).child("CartItems")
         val destinationRef = databaseReference.child(uid).child("OrderHistory")
-
-        sourceRef.addValueEventListener(object : ValueEventListener {
+        sourceRef.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
-                // Get the data from the source node
-                val data = dataSnapshot.value
-                // Write the data to the destination node
-                destinationRef.setValue(data)
+                if (dataSnapshot.exists()) {
+                    for (childSnapshot in dataSnapshot.children) {
+                        // Get the unique key
+                        val key = childSnapshot.key
+                        // Get the data from the source node
+                        val data = childSnapshot.value
+                        // Set the data in the destination node with the same key
+                        destinationRef.child(key!!).setValue(data)
+                            .addOnCompleteListener { task ->
+                                if (task.isSuccessful) {
+                                    // Data copied successfully for this key
+                                    Log.d("data", data.toString())
+                                } else {
+                                    // Handle the error
+                                }
+                            }
+                    }
+                    destinationRef.child("OrderAmount").setValue(total)
+                    removeItemaFromcart()
+                } else {
+                    // Source node is empty or does not exist
+                    Log.d("node empty", "node does not exitst")
+                }
+            }
 
+            private fun removeItemaFromcart() {
+                val nodeToDeleteRef = databaseReference.child(uid).child("CartItems")
+// Remove the child node and its data
+                nodeToDeleteRef.removeValue()
+                    .addOnCompleteListener { task ->
+                        if (task.isSuccessful) {
+                            // Node and data deleted successfully
+
+                        } else {
+                            // Handle the error
+                        }
+                    }
             }
 
             override fun onCancelled(databaseError: DatabaseError) {
-                // Handle errors
+                // Handle error
+                Log.d("node empty", databaseError.toString())
             }
         })
     }
