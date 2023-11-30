@@ -9,7 +9,7 @@
         android:id="@+id/cartFragment"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:icon="@drawable/cart"
+        android:icon="@drawable/carticon"
         android:title="Cart" />
     <item
         android:id="@+id/searchFragment"

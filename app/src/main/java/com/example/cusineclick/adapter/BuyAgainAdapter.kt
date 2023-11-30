@@ -5,8 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.cusineclick.databinding.BuyAgainItemBinding
 
-class BuyAgainAdapter(private val buyAgainFoodname:List<String>, private val buyAgainFoodprice: ArrayList<String>,
-                      private val buyAgainFoodimage:ArrayList<Int>) : RecyclerView.Adapter<BuyAgainAdapter.BuyAgainViewHolder>()  {
+class BuyAgainAdapter(private val buyAgainFoodprice: ArrayList<String>) : RecyclerView.Adapter<BuyAgainAdapter.BuyAgainViewHolder>()  {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BuyAgainViewHolder {
         val binding =BuyAgainItemBinding.inflate(LayoutInflater.from(parent.context),parent,false)
@@ -14,16 +13,14 @@ class BuyAgainAdapter(private val buyAgainFoodname:List<String>, private val buy
 
     }
     override fun onBindViewHolder(holder: BuyAgainViewHolder, position: Int) {
-        holder.bind(buyAgainFoodname[position],buyAgainFoodprice[position],buyAgainFoodimage[position])
+        holder.bind(buyAgainFoodprice[position])
     }
 
-    override fun getItemCount():Int = buyAgainFoodimage.size
+    override fun getItemCount():Int = buyAgainFoodprice.size
 
     inner class BuyAgainViewHolder(private val binding: BuyAgainItemBinding):RecyclerView.ViewHolder(binding.root) {
-        fun bind(foodname: String, foodprice: String,foodimage: Int) {
-            binding.buyagainfoodname.text = foodname
-            binding.buyagainfoodprice.text = foodprice
-            binding.buyagainfoodimage.setImageResource(foodimage)
+        fun bind(foodprice: String) {
+            binding.tvTotal.text = foodprice
         }
 
     }

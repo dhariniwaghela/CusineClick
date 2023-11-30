@@ -1,8 +1,6 @@
 package com.example.cusineclick
 
 import android.os.Bundle
-import android.util.Log
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.cusineclick.databinding.ActivityCheckOutBinding
 import com.example.cusineclick.fragment.ConfirmOrderBottomSheetFragment
@@ -13,6 +11,8 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
+import org.checkerframework.checker.nullness.qual.NonNull
+import java.text.DecimalFormat
 
 
 class CheckOutActivity : AppCompatActivity() {
@@ -22,69 +22,52 @@ class CheckOutActivity : AppCompatActivity() {
     private lateinit var databaseReference: DatabaseReference
     private lateinit var userinfo: UserModel
     private lateinit var uid: String
-    private var itemname: ArrayList<String> = ArrayList()
-    private lateinit var itemPrice: ArrayList<String>
-    private lateinit var itemCategory: ArrayList<String>
-    private lateinit var itemCalories: ArrayList<String>
-    private lateinit var itemImg: ArrayList<String>
-    private lateinit var itemIngredient: ArrayList<String>
-    private lateinit var itemQuantities: ArrayList<Int>
 
-    private lateinit var totalAmount: String
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityCheckOutBinding.inflate(layoutInflater)
         setContentView(binding.root)
         auth = FirebaseAuth.getInstance();
         uid = auth.currentUser?.uid.toString()
-        databaseReference = FirebaseDatabase.getInstance().getReference("user")
+        databaseReference = FirebaseDatabase.getInstance().getReference("User").child("UserData")
         if (uid.isNotEmpty()) {
             //fetching user info
             getUserData()
         }
-        //get user cart details from firebase
-       /*
-        val intent = intent
-        itemname = intent.getStringArrayExtra("ItemNames") as ArrayList<String>
-        itemPrice = intent.getStringArrayExtra("ItemPrice") as ArrayList<String>
-        itemCategory = intent.getStringArrayExtra("ItemCategory") as ArrayList<String>
-        itemCalories = intent.getStringArrayExtra("ItemCalories") as ArrayList<String>
-        itemIngredient = intent.getStringArrayExtra("ItemIngredient") as ArrayList<String>
-        itemImg = intent.getStringArrayExtra("ItemImg") as ArrayList<String>
-        itemQuantities = intent.getIntegerArrayListExtra("ItemQuantity") as ArrayList<Int>
 
-        Log.d("items", "intent received")
+        val totalAmount = intent.getDoubleExtra("total",0.0)
+        binding.tvAmount.text = "CA$ $totalAmount"
 
-        totalAmount = CalculateTotalAmount().toString() + "$"
-        binding.tvAmount.isEnabled = false
-        binding.tvAmount.text = totalAmount
-
-*/
-        binding.checkout.setOnClickListener {
+        val df = DecimalFormat("0.00")
+        val res: Double = totalAmount / 100.0f * 5.25
+        binding.tvTax.text = "CA$ ${df.format(res)}"
+        val total:Double = totalAmount + res
+        binding.tvTotal.text = "CA$${df.format(total)}"
+        binding.btncheckout.setOnClickListener {
             val bottomSheetFragment = ConfirmOrderBottomSheetFragment()
             bottomSheetFragment.show(supportFragmentManager, "Test")
+            transferdata()
         }
-
     }
 
-  /*  private fun CalculateTotalAmount(): Int {
-        var totalAmount = 0
-            for (i in 0 until itemPrice!!.size) {
-                var price = itemPrice!![i]
-                val lastChar = price.last()
-                val priceIntVal = if (lastChar == '$') {
-                    price.dropLast(1).toInt()
-                } else {
-                    price.toInt()
+    private fun transferdata() {
+        val sourceRef = databaseReference.child(uid).child("CartItem")
+        val destinationRef = databaseReference.child(uid).child("OrderHistory")
 
-                }
-                var quantity = itemQuantities!![i].toInt()
-                totalAmount += quantity * priceIntVal
+        sourceRef.addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+                // Get the data from the source node
+                val data = dataSnapshot.value
+                // Write the data to the destination node
+                destinationRef.setValue(data)
+
             }
-        return totalAmount
-    }
 
-   */
+            override fun onCancelled(databaseError: DatabaseError) {
+                // Handle errors
+            }
+        })
+    }
 
     private fun getUserData() {
         databaseReference.child(uid).addValueEventListener(object : ValueEventListener {
@@ -92,6 +75,7 @@ class CheckOutActivity : AppCompatActivity() {
                 userinfo = snapshot.getValue(UserModel::class.java)!!
                 binding.tvName.text = userinfo.name
                 binding.tvAddress.text = userinfo.location
+                binding.tvcity.text = userinfo.city
             }
 
             override fun onCancelled(error: DatabaseError) {

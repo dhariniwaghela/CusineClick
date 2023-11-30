@@ -1,8 +1,10 @@
 package com.example.cusineclick
 
 import android.app.Activity
+import android.content.ContentValues
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
@@ -16,20 +18,20 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.GoogleAuthProvider
 import com.google.firebase.auth.ktx.auth
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
 import com.google.firebase.ktx.Firebase
 import java.util.regex.Pattern
 
 
-@Suppress("DEPRECATION")
 class LoginActivity : AppCompatActivity() {
     private lateinit var email: String
     private lateinit var password: String
     private lateinit var auth: FirebaseAuth
     private lateinit var database: FirebaseDatabase
     private lateinit var googleSingInClient: GoogleSignInClient
-
-    val fragobj = ProfileFragment()
 
     private val binding: ActivityLoginBinding by lazy {
         ActivityLoginBinding.inflate(layoutInflater)
@@ -80,7 +82,7 @@ class LoginActivity : AppCompatActivity() {
             } else if (password.length < 6) {
                 binding.editTextPassword.error = "Password must have atleast 6 caracters"
             } else {
-                createUser()
+                LoginUser()
             }
 
         }
@@ -101,6 +103,7 @@ class LoginActivity : AppCompatActivity() {
 
     }
 
+    //for google login
     private val launcher =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
             if (result.resultCode == Activity.RESULT_OK) {
@@ -128,25 +131,63 @@ class LoginActivity : AppCompatActivity() {
             }
         }
 
-    private fun createUser() {
+    private fun LoginUser() {
         auth.signInWithEmailAndPassword(email, password).addOnCompleteListener { task ->
             if (task.isSuccessful) {
-                checkIfEmailVerified()
-                Toast.makeText(this, "Login Successfull", Toast.LENGTH_SHORT).show()
+                var isUserFound = false
+                val userdatareference = database.reference.child("User").child("UserData")
+                val valueEventListener = object : ValueEventListener {
+                    override fun onDataChange(dataSnapshot: DataSnapshot) {
+                        for (ds in dataSnapshot.children) {
+                            val userEmail = ds.child("email").getValue(String::class.java)
+                            val userPassword = ds.child("password").getValue(String::class.java)
+                            isUserFound = userEmail == email && userPassword == password
+                        }
+                        if (isUserFound) {
+                            val mainintent = Intent(this@LoginActivity, MainActivity::class.java)
+                            startActivity(mainintent)
+                            finish()
+                            Toast.makeText(
+                                this@LoginActivity,
+                                "Login Successfull",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        } else {
+                            Toast.makeText(
+                                this@LoginActivity,
+                                "Account Does not exist ",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        }
+                    }
+
+                    override fun onCancelled(databaseError: DatabaseError) {
+                        Log.d(ContentValues.TAG, databaseError.getMessage()) //Don't ignore errors!
+                        Toast.makeText(
+                            this@LoginActivity,
+                            "Account Does not exist ",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
+                }
+                userdatareference.addListenerForSingleValueEvent(valueEventListener)
 
             } else {
                 Toast.makeText(this, "Login Failed", Toast.LENGTH_SHORT).show()
             }
+
+
         }
-
-
     }
+
+    /*
 
     private fun updateUi(user: FirebaseUser?) {
         val mainintent = Intent(this, MainActivity::class.java)
         startActivity(mainintent)
         finish()
     }
+
 
     private fun checkIfEmailVerified() {
         val user = FirebaseAuth.getInstance().currentUser
@@ -165,4 +206,6 @@ class LoginActivity : AppCompatActivity() {
             //restart this activity
         }
     }
+
+     */
 }

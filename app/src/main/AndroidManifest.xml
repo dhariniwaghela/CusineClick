@@ -24,21 +24,11 @@
         <activity
             android:name=".VerifyEmailActivity"
             android:exported="false" />
-        <activity
-            android:name=".AddItemActivity"
-            android:exported="false" />
-        <activity
-            android:name=".AdminMainActivity"
-            android:exported="false" />
-        <activity
-            android:name=".SignUpAdminActivity"
-            android:exported="false" />
-        <activity
-            android:name=".LoginAdminActivity"
-            android:exported="false" />
+
         <activity
             android:name=".FoodDetailsActivity"
-            android:exported="false" />
+            android:exported="false"
+            />
         <activity
             android:name=".CheckOutActivity"
             android:exported="false" />

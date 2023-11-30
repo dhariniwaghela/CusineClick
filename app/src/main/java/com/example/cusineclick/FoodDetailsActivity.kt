@@ -38,6 +38,8 @@ class FoodDetailsActivity : AppCompatActivity() {
         foodCategory = intent.getStringExtra("MenuItemCategory")
         foodPrice =intent.getStringExtra("MenuItemPrice")
         foodimg = intent.getStringExtra("MenuItemImg")
+
+
         with(binding){
             tvFoodname.text = foodName
             tvFoodCalories.text = "0 - $foodCalories Cal."
@@ -69,10 +71,8 @@ class FoodDetailsActivity : AppCompatActivity() {
 
     //create cart item object
     val cartItem = CartItem(foodName.toString(),foodPrice.toString(),foodDesc.toString(),foodIngredients.toString(),foodCategory.toString(),foodCalories.toString(),foodimg.toString(),1)
-
-
         //save data to cart item to firebase
-        database.child("user").child(userId).child("CartItems").push().setValue(cartItem).addOnSuccessListener {
+        database.child("User").child("UserData").child(userId).child("CartItems").push().setValue(cartItem).addOnSuccessListener {
             Toast.makeText(this,"Item Added Successfully in Cart",Toast.LENGTH_SHORT).show()
         }.addOnFailureListener{
             Toast.makeText(this,"Item Not Added in Cart",Toast.LENGTH_SHORT).show()

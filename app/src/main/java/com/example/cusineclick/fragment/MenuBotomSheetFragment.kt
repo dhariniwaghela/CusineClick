@@ -20,6 +20,7 @@ class MenuBotomSheetFragment : BottomSheetDialogFragment() {
     private lateinit var binding: FragmentMenuBottomSheetBinding
     private lateinit var database: FirebaseDatabase
     private lateinit var menuItems: MutableList<MenuItem>
+    private lateinit var adapter: MenuAdapter
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -36,6 +37,7 @@ class MenuBotomSheetFragment : BottomSheetDialogFragment() {
             dismiss()
         }
 
+        setAdapter()
         retriveMenuItems()
         return binding.root
     }
@@ -53,7 +55,7 @@ class MenuBotomSheetFragment : BottomSheetDialogFragment() {
                         menuItems.add(it)
                     }
                     //once data add set it to adapter
-                    setAdapter()
+                    adapter.updateList(menuItems)
                 }
             }
 
@@ -66,15 +68,9 @@ class MenuBotomSheetFragment : BottomSheetDialogFragment() {
 
     }
     private fun setAdapter() {
-        if(menuItems.isNotEmpty()) {
-            val adapter = MenuAdapter(menuItems, requireContext())
+            adapter = MenuAdapter(requireContext())
             binding.menuRecyclerView.layoutManager = LinearLayoutManager(requireContext())
             binding.menuRecyclerView.adapter = adapter
-        }
-        else
-        {
-            Log.d("Error","item is not set")
-        }
 
     }
 

@@ -31,6 +31,7 @@ class ChooseLocationActivity : AppCompatActivity() {
     private lateinit var clientLocation: FusedLocationProviderClient
     private val permissionId = 2
     private var locationString: String? = null
+    private var city:String?= null
     private lateinit var auth: FirebaseAuth
     private lateinit var database: DatabaseReference
     private lateinit var googleSingInClient: GoogleSignInClient
@@ -58,7 +59,8 @@ class ChooseLocationActivity : AppCompatActivity() {
                 database = Firebase.database.reference
                 val userId = FirebaseAuth.getInstance().currentUser!!.uid
                 //save user data
-                database.child("user").child(userId).child("location").setValue(locationString)
+                database.child("User").child("UserData").child(userId).child("location").setValue(locationString)
+                database.child("User").child("UserData").child(userId).child("city").setValue(city)
 
                 finish()
             }
@@ -131,6 +133,7 @@ class ChooseLocationActivity : AppCompatActivity() {
                             val throughfare = list?.get(0)?.thoroughfare.toString()
                             val locality = list?.get(0)?.locality.toString()
                             locationString = "$feature $throughfare"
+                            city= "$locality"
                             binding.location.text = "$feature $throughfare $locality"
                         }
                     }

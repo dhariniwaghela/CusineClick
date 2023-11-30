@@ -13,12 +13,17 @@ import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
+import com.google.firebase.FirebaseApp
+import com.google.firebase.FirebaseOptions
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseAuthUserCollisionException
 import com.google.firebase.auth.GoogleAuthProvider
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
+import com.google.firebase.ktx.app
+import com.google.firebase.ktx.initialize
 import java.util.regex.Pattern
 
 
@@ -34,7 +39,6 @@ class SignUpActivity : AppCompatActivity() {
     private val binding: ActivitySignUpBinding by lazy {
         ActivitySignUpBinding.inflate(layoutInflater)
     }
-
 
     val EMAIL_ADDRESS_PATTERN = Pattern.compile(
         "[a-zA-Z0-9\\+\\.\\_\\%\\-\\+]{1,256}" +
@@ -54,6 +58,7 @@ class SignUpActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
         //initialize firebase database
+        FirebaseApp.initializeApp(this);
         auth = Firebase.auth
         //initialize database
         database = Firebase.database.reference
@@ -126,60 +131,65 @@ class SignUpActivity : AppCompatActivity() {
 
     private fun createAccount(email: String, password: String) {
         auth.createUserWithEmailAndPassword(email, password).addOnCompleteListener { task ->
+
             if (task.isSuccessful) {
                 Toast.makeText(this, "Account Created Successfully", Toast.LENGTH_SHORT).show()
                 saveUserData()
-
                 sendVerificationEmail()
-                // val mainintent = Intent(this, ChooseLocationActivity::class.java)
-                // startActivity(mainintent)
                 finish()
             } else {
-                Toast.makeText(this, "Account Creation Failed", Toast.LENGTH_SHORT).show()
-                Log.d("Account", "create Account:Failure", task.exception)
+                if (task.getException() is FirebaseAuthUserCollisionException) {
+                    Toast.makeText(
+                        this,
+                        "User with this email already exist.",
+                        Toast.LENGTH_SHORT
+                    ).show();
+                } else {
+                    Toast.makeText(this, "Account Creation Failed", Toast.LENGTH_SHORT).show()
+                    Log.d("Account", "create Account:Failure", task.exception)
 
+                }
             }
         }
     }
+        private fun saveUserData() {
+            //retrive data
+            username = binding.editTextName.text.toString()
+            email = binding.editTextTextEmailAddress.text.toString().trim()
+            password = binding.editTextPassword.text.toString().trim()
 
-    private fun saveUserData() {
-        //retrive data
-        username = binding.editTextName.text.toString()
-        email = binding.editTextTextEmailAddress.text.toString().trim()
-        password = binding.editTextPassword.text.toString().trim()
+            val user = UserModel(username, email, password)
+            val userId = FirebaseAuth.getInstance().currentUser!!.uid
+            //save user data
+            database.child("User").child("UserData").child(userId).setValue(user)
 
-        val user = UserModel(username, email, password)
-        val userId = FirebaseAuth.getInstance().currentUser!!.uid
-        //save user data
-        database.child("user").child(userId).setValue(user)
+        }
 
+        private fun sendVerificationEmail() {
+            val user = FirebaseAuth.getInstance().currentUser
+            user!!.sendEmailVerification()
+                .addOnCompleteListener { task ->
+                    if (task.isSuccessful) {
+                        // email sent
 
-    }
+                        // after email is sent just logout the user and finish this activity
+                        Toast.makeText(this, "Verification link has been send", Toast.LENGTH_SHORT)
+                            .show()
+                        val intent = Intent(this, VerifyEmailActivity::class.java)
+                        intent.putExtra("email", email)
+                        intent.putExtra("name", username)
+                        startActivity(intent)
+                        finish()
+                    } else {
+                        // email not sent, so display message and restart the activity or do whatever you wish to do
 
-    private fun sendVerificationEmail() {
-        val user = FirebaseAuth.getInstance().currentUser
-        user!!.sendEmailVerification()
-            .addOnCompleteListener { task ->
-                if (task.isSuccessful) {
-                    // email sent
-
-                    // after email is sent just logout the user and finish this activity
-                    Toast.makeText(this, "Verification link has been send", Toast.LENGTH_SHORT).show()
-                    val intent = Intent(this, VerifyEmailActivity::class.java)
-                    intent.putExtra("email",email)
-                    intent.putExtra("name",username)
-                    startActivity(intent)
-                    finish()
-                } else {
-                    // email not sent, so display message and restart the activity or do whatever you wish to do
-
-                    //restart this activity
-                    overridePendingTransition(0, 0)
-                    finish()
-                    overridePendingTransition(0, 0)
-                    startActivity(intent)
+                        //restart this activity
+                        overridePendingTransition(0, 0)
+                        finish()
+                        overridePendingTransition(0, 0)
+                        startActivity(intent)
+                    }
                 }
-            }
-    }
+        }
 
-}
+    }

@@ -1,14 +1,12 @@
 package com.example.cusineclick.Fragment
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.cusineclick.R
 import com.example.cusineclick.adapter.MenuAdapter
 import com.example.cusineclick.databinding.FragmentSearchBinding
 import com.example.cusineclick.model.MenuItem
@@ -25,15 +23,14 @@ class SearchFragment : Fragment() {
     private lateinit var adapter: MenuAdapter
     private lateinit var database: FirebaseDatabase
     private lateinit var menuItems: MutableList<MenuItem>
+    private lateinit var filterMenuItemList: MutableList<MenuItem>
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
     }
 
-    private val filterFoodName = mutableListOf<String>()
-    private val filterFoodprice = mutableListOf<String>()
-    private val filterFoodImage = mutableListOf<Int>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -42,10 +39,13 @@ class SearchFragment : Fragment() {
         // Inflate the layout for this fragment
         binding = FragmentSearchBinding.inflate(inflater, container, false)
 
+
+        setAdapter()
+
         retriveMenuItems()
 
         //setup for search view
-     //   setupSearchView()
+        setupSearchView()
 
 
         return binding.root
@@ -63,8 +63,7 @@ class SearchFragment : Fragment() {
                     menuItem?.let {
                         menuItems.add(it)
                     }
-                    //once data add set it to adapter
-                    setAdapter()
+                    adapter.updateList(menuItems)
                 }
             }
 
@@ -76,17 +75,11 @@ class SearchFragment : Fragment() {
         })
 
     }
+
     private fun setAdapter() {
-        if(menuItems.isNotEmpty()) {
-            val adapter = MenuAdapter(menuItems, requireContext())
+            adapter = MenuAdapter(requireContext())
             binding.searchRecyclerView.layoutManager = LinearLayoutManager(requireContext())
             binding.searchRecyclerView.adapter = adapter
-        }
-        else
-        {
-            Log.d("Error","item is not set")
-        }
-
     }
 
 
@@ -108,18 +101,14 @@ class SearchFragment : Fragment() {
     }
 
     private fun filterMenuItems(query: String?) {
-        filterFoodName.clear()
-        filterFoodprice.clear()
-        filterFoodImage.clear()
-
+        filterMenuItemList = mutableListOf()
+        filterMenuItemList.clear()
         menuItems.forEachIndexed { index, foodname ->
-            if (filterFoodName.contains(query.toString())) {
-                filterFoodName.add(foodname.toString())
-                filterFoodprice.add(menuItems[index].toString())
-               // filterFoodImage.add(OriginalMenuItemImage[index])
+            if (foodname.itemName?.lowercase()?.toString()!!.contains(query?.lowercase()!!)) {
+                filterMenuItemList.add(foodname)
             }
         }
-        adapter.notifyDataSetChanged()
+        adapter.updateList(filterMenuItemList)
     }
 
     companion object {

@@ -13,9 +13,16 @@ import com.example.cusineclick.FoodDetailsActivity
 import com.example.cusineclick.databinding.MenuItemBinding
 import com.example.cusineclick.model.MenuItem
 
-class MenuAdapter(private val menuitems:List<MenuItem>,
-                  private val requireContext: Context)  : RecyclerView.Adapter<MenuAdapter.MenuViewHolder>() {
+class MenuAdapter(private val requireContext: Context)  : RecyclerView.Adapter<MenuAdapter.MenuViewHolder>() {
 
+    private var menuitems:List<MenuItem> = mutableListOf()
+
+
+    fun updateList(MenuItems: MutableList<MenuItem>){
+        menuitems = MenuItems
+        notifyDataSetChanged()
+
+    }
 
     @SuppressLint("SuspiciousIndentation")
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MenuViewHolder {
@@ -69,7 +76,6 @@ class MenuAdapter(private val menuitems:List<MenuItem>,
                 menuprice.text = "$${menuItem.itemPrice}"
                 val uri = Uri.parse(menuItem.itemImage)
                 Glide.with(requireContext).load(uri).into(menuimage)
-
 
             }
 

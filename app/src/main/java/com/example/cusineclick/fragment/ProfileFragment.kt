@@ -21,44 +21,44 @@ import com.google.firebase.database.ValueEventListener
 
 class ProfileFragment : Fragment() {
     private lateinit var binding: FragmentProfileBinding
-    private lateinit var auth:FirebaseAuth
+    private lateinit var auth: FirebaseAuth
     private lateinit var databaseReference: DatabaseReference
-    private lateinit var userinfo : UserModel
+    private lateinit var userinfo: UserModel
     private lateinit var uid: String
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
-           }
+        }
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding=FragmentProfileBinding.inflate(inflater,container,false)
+        binding = FragmentProfileBinding.inflate(inflater, container, false)
 
 
         auth = FirebaseAuth.getInstance();
-        uid= auth.currentUser?.uid.toString()
-        databaseReference = FirebaseDatabase.getInstance().getReference("user")
-        if(uid.isNotEmpty()){
+        uid = auth.currentUser?.uid.toString()
+        databaseReference = FirebaseDatabase.getInstance().getReference("User").child("UserData")
+        if (uid.isNotEmpty()) {
             //fetching user info
             getUserData()
         }
 
-        binding.btnEdit.setOnClickListener{
-            val intent = Intent(context,EditProfileActivity::class.java)
+        binding.btnEdit.setOnClickListener {
+            val intent = Intent(context, EditProfileActivity::class.java)
             startActivity(intent)
         }
 
         binding.btnLogout.setOnClickListener(View.OnClickListener {
-                auth!!.signOut()
-                val intent = Intent(activity, StartActivity::class.java)
-                startActivity(intent)
+            auth!!.signOut()
+            val intent = Intent(activity, StartActivity::class.java)
+            startActivity(intent)
             //logout but not kill fragment
             activity?.finish()
-                Toast.makeText(activity, "Logout Successful !", Toast.LENGTH_SHORT).show()
-            })
+            Toast.makeText(activity, "Logout Successful !", Toast.LENGTH_SHORT).show()
+        })
 
         return binding.root
     }
@@ -69,7 +69,7 @@ class ProfileFragment : Fragment() {
                 userinfo = snapshot.getValue(UserModel::class.java)!!
                 binding.textViewName.setText(userinfo.name)
                 binding.textViewEmail.setText(userinfo.email)
-                binding.textViewAddress.setText(userinfo.location)
+                binding.textViewAddress.text = "${userinfo.location},${userinfo.city}"
             }
 
             override fun onCancelled(error: DatabaseError) {
@@ -78,6 +78,5 @@ class ProfileFragment : Fragment() {
 
         })
     }
-
 
 }
