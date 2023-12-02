@@ -8,14 +8,12 @@ import android.util.Log
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
-import com.example.cusineclick.Fragment.ProfileFragment
 import com.example.cusineclick.databinding.ActivityLoginBinding
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.GoogleAuthProvider
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.DataSnapshot
@@ -180,32 +178,4 @@ class LoginActivity : AppCompatActivity() {
         }
     }
 
-    /*
-
-    private fun updateUi(user: FirebaseUser?) {
-        val mainintent = Intent(this, MainActivity::class.java)
-        startActivity(mainintent)
-        finish()
-    }
-
-
-    private fun checkIfEmailVerified() {
-        val user = FirebaseAuth.getInstance().currentUser
-        if (user!!.isEmailVerified) {
-            // user is verified, so you can finish this activity or send user to activity which you want.
-            finish()
-            updateUi(user)
-            Toast.makeText(this@LoginActivity, "Successfully logged in", Toast.LENGTH_SHORT).show()
-        } else {
-            // email is not verified, so just prompt the message to the user and restart this activity.
-            // NOTE: don't forget to log out the user.
-            val mainintent = Intent(this, VerifyEmailActivity::class.java)
-            startActivity(mainintent)
-            finish()
-
-            //restart this activity
-        }
-    }
-
-     */
 }

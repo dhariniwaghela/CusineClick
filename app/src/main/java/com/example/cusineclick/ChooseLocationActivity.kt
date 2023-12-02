@@ -2,7 +2,6 @@ package com.example.cusineclick
 
 import android.Manifest
 import android.annotation.SuppressLint
-import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -51,9 +50,6 @@ class ChooseLocationActivity : AppCompatActivity() {
             if(locationString!=null) {
                 val resultIntent = Intent();
 // TODO Add extras or a data URI to this intent as appropriate.
-                resultIntent.putExtra("location", locationString);
-                setResult(/* resultCode = */ Activity.RESULT_OK, /* data = */ resultIntent);
-                //initialize firebase database
                 auth = Firebase.auth
                 //initialize database
                 database = Firebase.database.reference
@@ -61,7 +57,6 @@ class ChooseLocationActivity : AppCompatActivity() {
                 //save user data
                 database.child("User").child("UserData").child(userId).child("location").setValue(locationString)
                 database.child("User").child("UserData").child(userId).child("city").setValue(city)
-
                 finish()
             }
             else{
@@ -148,6 +143,5 @@ class ChooseLocationActivity : AppCompatActivity() {
             requestPermissions()
         }
     }
-
 
 }

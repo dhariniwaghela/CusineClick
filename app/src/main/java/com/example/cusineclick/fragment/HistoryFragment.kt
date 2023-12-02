@@ -44,6 +44,8 @@ class HistoryFragment : Fragment() {
         auth = FirebaseAuth.getInstance()
         //database reference to firebase
         userId = auth.currentUser?.uid ?: ""
+        database = FirebaseDatabase.getInstance()
+        orderItems = mutableListOf()
 
         setAdapter()
 
@@ -55,9 +57,8 @@ class HistoryFragment : Fragment() {
         //database reference to firebase
         database = FirebaseDatabase.getInstance()
         userId = auth.currentUser?.uid ?: ""
-        orderItems = mutableListOf()
         orderhistoryref =
-            database.reference.child("User").child("UserData").child(userId).child("OrderHistory").child("OrderAmount")
+            database.reference.child("Order").child(userId).child("OrderHistory")
         orderhistoryref.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 for (ordersnapshot in snapshot.children) {

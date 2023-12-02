@@ -28,7 +28,7 @@
     <string name="newpassword">New Password</string>
     <string name="createpwd">Create your new password here</string>
     <string name="confirm">Confirm</string>
-    <string name="default_web_client_id">1:585183072161:android:e933cc1aa0beef7f2e05e0</string>
+    <string name="default_web_client_id">585183072161-mp5su5bfff48qgu6ejdqm598b3ooh5ne.apps.googleusercontent.com</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title_activity_main_demo">MainActivity_demo</string>

@@ -43,7 +43,7 @@
         android:layout_weight="0.5"
         android:orientation="horizontal"
         android:paddingTop="5dp"
-        android:weightSum="5">
+        android:weightSum="4">
 
         <LinearLayout
             android:layout_width="0dp"
@@ -84,26 +84,6 @@
 
         </LinearLayout>
 
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:gravity="center">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@drawable/editshape"
-                android:fontFamily="@font/lato"
-                android:paddingStart="15dp"
-                android:paddingTop="10dp"
-                android:paddingEnd="15dp"
-                android:paddingBottom="10dp"
-                android:text="Edit"
-                android:textColor="@color/black"
-                android:textSize="12sp" />
-
-        </LinearLayout>
 
     </LinearLayout>
 
@@ -113,7 +93,7 @@
         android:layout_weight="0.5"
         android:orientation="horizontal"
         android:paddingTop="5dp"
-        android:weightSum="5">
+        android:weightSum="4">
 
         <LinearLayout
             android:layout_width="0dp"
@@ -153,26 +133,6 @@
 
         </LinearLayout>
 
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:gravity="center">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@drawable/editshape"
-                android:fontFamily="@font/lato"
-                android:paddingStart="15dp"
-                android:paddingTop="10dp"
-                android:paddingEnd="15dp"
-                android:paddingBottom="10dp"
-                android:text="Edit"
-                android:textColor="@color/black"
-                android:textSize="12sp" />
-
-        </LinearLayout>
 
     </LinearLayout>
 

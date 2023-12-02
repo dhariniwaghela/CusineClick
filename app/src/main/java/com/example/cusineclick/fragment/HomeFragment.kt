@@ -17,6 +17,7 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
+import java.util.Random
 
 
 class HomeFragment : Fragment() {
@@ -96,7 +97,8 @@ class HomeFragment : Fragment() {
         //create shuffle list for popular item
 
         val index = popularitems.indices.toList().shuffled()
-        val numofItem = 5
+        val randomInt = (5..10).random()
+        val numofItem = randomInt
         val subsetmenuitem = index.take(numofItem).map { popularitems[it] }
 
         //once data add set it to adapter

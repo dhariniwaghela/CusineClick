@@ -7,7 +7,9 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import com.bumptech.glide.Glide
 import com.example.cusineclick.EditProfileActivity
+import com.example.cusineclick.R
 import com.example.cusineclick.StartActivity
 import com.example.cusineclick.databinding.FragmentProfileBinding
 import com.example.cusineclick.model.UserModel
@@ -70,6 +72,14 @@ class ProfileFragment : Fragment() {
                 binding.textViewName.setText(userinfo.name)
                 binding.textViewEmail.setText(userinfo.email)
                 binding.textViewAddress.text = "${userinfo.location},${userinfo.city}"
+                val imageUrl = userinfo.imgUri
+                if(imageUrl!= null) {
+                    Glide.with(requireContext()).load(imageUrl).into(binding.profileImage)
+                }
+                else
+                {
+                    binding.profileImage.setImageResource(R.drawable.profile)
+                }
             }
 
             override fun onCancelled(error: DatabaseError) {

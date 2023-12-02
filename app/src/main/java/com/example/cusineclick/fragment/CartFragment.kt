@@ -27,10 +27,8 @@ class CartFragment : Fragment() {
 
     private lateinit var auth: FirebaseAuth
     private lateinit var database: FirebaseDatabase
-    private lateinit var cartItemRef: DatabaseReference
     private lateinit var userId: String
     private lateinit var cartItems: MutableList<CartItem>
-    private lateinit var retriveCartItemList: MutableList<CartItem>
     private lateinit var cartAdapter: CartAdapter
 
 
@@ -50,7 +48,6 @@ class CartFragment : Fragment() {
         //database reference to firebase
         database = FirebaseDatabase.getInstance()
         userId = auth.currentUser?.uid ?: ""
-        cartItemRef= database.reference.child("User").child("UserData").child(userId).child("CartItems")
         cartItems = mutableListOf()
 
         setAdapter()
@@ -60,9 +57,9 @@ class CartFragment : Fragment() {
         binding.btnProceed.setOnClickListener(View.OnClickListener {
             //get order items details before procceeding to check out
 
-        var total =  getOrderItemDetails()
-            val intent = Intent(requireContext(),CheckOutActivity::class.java)
-            intent.putExtra("total",total)
+            var total = getOrderItemDetails()
+            val intent = Intent(requireContext(), CheckOutActivity::class.java)
+            intent.putExtra("total", total)
             startActivity(intent)
 
         })
@@ -71,16 +68,20 @@ class CartFragment : Fragment() {
 
     private fun getOrderItemDetails(): Double {
         var total = 0.0
-        if(cartItems.size > 0) {
+        if (cartItems.size > 0) {
             for (cartitem in cartItems) {
                 var price = cartitem.foodItemPrice?.toDouble()
+                var itemQty = cartitem.foodItemQuantity?.toDouble()
                 if (price != null) {
-                    total += price
+                    var itemIndPrice = itemQty?.times(price);
+                    if (itemIndPrice != null) {
+                        total += itemIndPrice
+                    }
                 }
             }
         }
         return total
-        Log.d("total",total.toString())
+        Log.d("total", total.toString())
     }
 
 
@@ -88,8 +89,7 @@ class CartFragment : Fragment() {
         //database reference to firebase
         database = FirebaseDatabase.getInstance()
         userId = auth.currentUser?.uid ?: ""
-        val cartItemRef: DatabaseReference =
-            database.reference.child("User").child("UserData").child(userId).child("CartItems")
+        val cartItemRef: DatabaseReference = database.reference.child("User").child("UserData").child(userId).child("CartItems")
         cartItems = mutableListOf()
         cartItemRef.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
@@ -113,7 +113,8 @@ class CartFragment : Fragment() {
 
     private fun setAdapter() {
         cartAdapter = CartAdapter(
-            requireContext())
+            requireContext()
+        )
         binding.cartRecyclerView.layoutManager =
             LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
         binding.cartRecyclerView.adapter = cartAdapter

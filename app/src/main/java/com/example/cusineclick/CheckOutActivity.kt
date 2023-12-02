@@ -2,6 +2,7 @@ package com.example.cusineclick
 
 import android.os.Bundle
 import android.util.Log
+import androidx.activity.addCallback
 import androidx.appcompat.app.AppCompatActivity
 import com.example.cusineclick.databinding.ActivityCheckOutBinding
 import com.example.cusineclick.fragment.ConfirmOrderBottomSheetFragment
@@ -12,7 +13,6 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
-import org.checkerframework.checker.nullness.qual.NonNull
 import java.text.DecimalFormat
 
 
@@ -23,7 +23,8 @@ class CheckOutActivity : AppCompatActivity() {
     private lateinit var databaseReference: DatabaseReference
     private lateinit var userinfo: UserModel
     private lateinit var uid: String
-    private var total: Double = 0.0
+    private lateinit var database:DatabaseReference
+    var total: Double = 0.0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,6 +32,7 @@ class CheckOutActivity : AppCompatActivity() {
         setContentView(binding.root)
         auth = FirebaseAuth.getInstance();
         uid = auth.currentUser?.uid.toString()
+        database = FirebaseDatabase.getInstance().reference
         databaseReference = FirebaseDatabase.getInstance().getReference("User").child("UserData")
         if (uid.isNotEmpty()) {
             //fetching user info
@@ -39,72 +41,77 @@ class CheckOutActivity : AppCompatActivity() {
 
         val totalAmount = intent.getDoubleExtra("total", 0.0)
         binding.tvAmount.text = "CA$ $totalAmount"
+        val df = DecimalFormat("##.##")
 
-        val df = DecimalFormat("0.00")
-        val res: Double = totalAmount / 100.0f * 5.25
+        val res: Double = totalAmount / 100.0 * 5.25
+
         binding.tvTax.text = "CA$ ${df.format(res)}"
-        total =totalAmount + res
+         total = totalAmount + res
         binding.tvTotal.text = "CA$${df.format(total)}"
-
         binding.btncheckout.setOnClickListener {
             transferdata()
             val bottomSheetFragment = ConfirmOrderBottomSheetFragment()
+            bottomSheetFragment.dialog?.setCancelable(false)
+            bottomSheetFragment.dialog?.setCanceledOnTouchOutside(false)
             bottomSheetFragment.show(supportFragmentManager, "Test")
-
         }
+
     }
 
     private fun transferdata() {
-        val sourceRef = databaseReference.child(uid).child("CartItems")
-        val destinationRef = databaseReference.child(uid).child("OrderHistory")
+        val destinationRef = database.child("Order").child(uid).child("OrderHistory").push()
+        val sourceRef= database.child("User").child("UserData").child(uid).child("CartItems")
         sourceRef.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 if (dataSnapshot.exists()) {
                     for (childSnapshot in dataSnapshot.children) {
                         // Get the unique key
                         val key = childSnapshot.key
+
                         // Get the data from the source node
                         val data = childSnapshot.value
+
                         // Set the data in the destination node with the same key
                         destinationRef.child(key!!).setValue(data)
                             .addOnCompleteListener { task ->
                                 if (task.isSuccessful) {
                                     // Data copied successfully for this key
-                                    Log.d("data", data.toString())
+                                    Log.d("copy","copy data to order node")
                                 } else {
                                     // Handle the error
                                 }
                             }
                     }
+                    removeDataFromCart()
                     destinationRef.child("OrderAmount").setValue(total)
-                    removeItemaFromcart()
                 } else {
                     // Source node is empty or does not exist
-                    Log.d("node empty", "node does not exitst")
                 }
             }
+                    private fun removeDataFromCart() {
+// Remove the cart item node and its data
+                        sourceRef.removeValue()
+                            .addOnCompleteListener { task ->
+                                if (task.isSuccessful) {
+                                    // Node and data deleted successfully
 
-            private fun removeItemaFromcart() {
-                val nodeToDeleteRef = databaseReference.child(uid).child("CartItems")
-// Remove the child node and its data
-                nodeToDeleteRef.removeValue()
-                    .addOnCompleteListener { task ->
-                        if (task.isSuccessful) {
-                            // Node and data deleted successfully
-
-                        } else {
-                            // Handle the error
-                        }
+                                } else {
+                                    // Handle the error
+                                }
+                            }
                     }
-            }
 
             override fun onCancelled(databaseError: DatabaseError) {
                 // Handle error
-                Log.d("node empty", databaseError.toString())
             }
         })
     }
 
+
+    override fun onBackPressed() {
+        super.onBackPressed()
+        finish()
+    }
     private fun getUserData() {
         databaseReference.child(uid).addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
