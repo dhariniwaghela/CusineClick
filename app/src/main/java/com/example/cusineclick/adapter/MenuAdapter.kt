@@ -1,6 +1,5 @@
 package com.example.cusineclick.adapter
 
-import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
@@ -13,18 +12,19 @@ import com.example.cusineclick.FoodDetailsActivity
 import com.example.cusineclick.databinding.MenuItemBinding
 import com.example.cusineclick.model.MenuItem
 
-class MenuAdapter(private val requireContext: Context)  : RecyclerView.Adapter<MenuAdapter.MenuViewHolder>() {
+class MenuAdapter(private val requireContext: Context) :
+    RecyclerView.Adapter<MenuAdapter.MenuViewHolder>() {
 
-    private var menuitems:List<MenuItem> = mutableListOf()
+    private var menuitems: List<MenuItem> = mutableListOf()
 
 
-    fun updateList(MenuItems: MutableList<MenuItem>){
+    fun updateList(MenuItems: MutableList<MenuItem>) {
         menuitems = MenuItems
         notifyDataSetChanged()
 
     }
 
-    @SuppressLint("SuspiciousIndentation")
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MenuViewHolder {
         val binding = MenuItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return MenuViewHolder(binding)

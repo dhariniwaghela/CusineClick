@@ -1,6 +1,5 @@
 package com.example.cusineclick.adapter
 
-import android.accounts.Account
 import android.content.Context
 import android.net.Uri
 import android.util.Log
@@ -12,12 +11,8 @@ import com.example.cusineclick.R
 import com.example.cusineclick.databinding.CartItemBinding
 import com.example.cusineclick.model.CartItem
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.database.ValueEventListener
-import com.google.gson.Gson
 
 
 class CartAdapter(
@@ -29,7 +24,6 @@ class CartAdapter(
 
     //firebase instance
     private val auth = FirebaseAuth.getInstance()
-    private var itemQuantities: IntArray = intArrayOf()
     private lateinit var cartItemRef: DatabaseReference
 
 
@@ -42,8 +36,7 @@ class CartAdapter(
     init {
         val database = FirebaseDatabase.getInstance()
         val userId = auth.currentUser?.uid ?: ""
-        cartItemRef =
-            database.reference.child("User").child("UserData").child(userId).child("CartItems")
+        cartItemRef = database.reference.child("User").child("UserData").child(userId).child("CartItems")
     }
 
 

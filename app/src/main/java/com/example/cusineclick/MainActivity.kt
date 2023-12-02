@@ -29,7 +29,6 @@ class MainActivity : AppCompatActivity() {
         var bottomNav = findViewById<BottomNavigationView>(R.id.bottomNavView)
         bottomNav.setupWithNavController(navController)
 
-
         binding.notificationButton.setOnClickListener {
             val bottomSheetDialog = BottomNotificationFragment()
             bottomSheetDialog.show(supportFragmentManager, "Test")
@@ -48,11 +47,10 @@ class MainActivity : AppCompatActivity() {
             override fun onDataChange(snapshot: DataSnapshot) {
                 if (snapshot.exists()) {
                     val address = snapshot.child("location").getValue(String::class.java)
-                    if(address!=null) {
+                    if (address != null) {
                         binding.tvLocation.text = address
-                    }
-                    else{
-                        binding.tvLocation.text= "Choose Location"
+                    } else {
+                        binding.tvLocation.text = ""
                     }
                 }
             }
@@ -63,6 +61,24 @@ class MainActivity : AppCompatActivity() {
 
         })
 
+    }
 
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        // check that it is the SecondActivity with an OK result
+        if (requestCode == 555) {
+            if (resultCode == RESULT_OK) { // Activity.RESULT_OK
+                // get String data from Intent
+                val returnString = data?.getStringExtra("loc")
+                // set text view with string
+                binding.tvLocation.text = returnString
+            }
+        }
     }
 }
+
+
+
+

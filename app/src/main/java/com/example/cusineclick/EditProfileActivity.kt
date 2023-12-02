@@ -65,7 +65,6 @@ class EditProfileActivity : AppCompatActivity() {
 
         binding.addprofileImage.setOnClickListener {
             pickImage.launch("image/*")
-            img_flag = true
 
         }
 
@@ -104,6 +103,7 @@ class EditProfileActivity : AppCompatActivity() {
         if (uri != null) {
             binding.addprofileImage.setImageURI(uri)
             profileImageUri = uri
+            img_flag = true
         }
     }
 

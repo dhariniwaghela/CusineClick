@@ -46,18 +46,17 @@ class ChooseLocationActivity : AppCompatActivity() {
         binding.location.setOnClickListener {
             getLocation()
         }
+
+        auth = Firebase.auth
+        //initialize database
+        database = Firebase.database.reference
         binding.btnconfirm.setOnClickListener {
             if(locationString!=null) {
                 val resultIntent = Intent();
-// TODO Add extras or a data URI to this intent as appropriate.
-                auth = Firebase.auth
-                //initialize database
-                database = Firebase.database.reference
-                val userId = FirebaseAuth.getInstance().currentUser!!.uid
-                //save user data
-                database.child("User").child("UserData").child(userId).child("location").setValue(locationString)
-                database.child("User").child("UserData").child(userId).child("city").setValue(city)
+                resultIntent.putExtra("loc",locationString)
+                setResult(RESULT_OK, resultIntent)
                 finish()
+
             }
             else{
                 Toast.makeText(this, "Choose Location", Toast.LENGTH_SHORT).show()
@@ -130,6 +129,10 @@ class ChooseLocationActivity : AppCompatActivity() {
                             locationString = "$feature $throughfare"
                             city= "$locality"
                             binding.location.text = "$feature $throughfare $locality"
+                            //save user data
+                            val userId = FirebaseAuth.getInstance().currentUser!!.uid
+                            database.child("User").child("UserData").child(userId).child("location").setValue(locationString)
+                            database.child("User").child("UserData").child(userId).child("city").setValue(city)
                         }
                     }
                 }

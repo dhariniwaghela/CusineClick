@@ -71,7 +71,12 @@ class ProfileFragment : Fragment() {
                 userinfo = snapshot.getValue(UserModel::class.java)!!
                 binding.textViewName.setText(userinfo.name)
                 binding.textViewEmail.setText(userinfo.email)
-                binding.textViewAddress.text = "${userinfo.location},${userinfo.city}"
+                if(userinfo.location.toString() == null || userinfo.city.toString()==null){
+                    binding.textViewAddress.text = ""
+                }
+                else {
+                    binding.textViewAddress.text = "${userinfo.location},${userinfo.city}"
+                }
                 val imageUrl = userinfo.imgUri
                 if(imageUrl!= null) {
                     Glide.with(requireContext()).load(imageUrl).into(binding.profileImage)
