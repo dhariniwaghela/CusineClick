@@ -15,9 +15,7 @@ import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 
 
-class CartAdapter(
-    private val context: Context
-) : RecyclerView.Adapter<CartAdapter.CartViewHolder>() {
+class CartAdapter(private val context: Context) : RecyclerView.Adapter<CartAdapter.CartViewHolder>() {
 
 
     private var cartitems: ArrayList<CartItem> = ArrayList()

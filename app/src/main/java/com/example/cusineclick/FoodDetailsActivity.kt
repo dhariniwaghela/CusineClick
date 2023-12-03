@@ -9,7 +9,6 @@ import com.bumptech.glide.Glide
 import com.example.cusineclick.databinding.ActivityFoodDetailsBinding
 import com.example.cusineclick.model.CartItem
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 
 class FoodDetailsActivity : AppCompatActivity() {
@@ -70,8 +69,7 @@ class FoodDetailsActivity : AppCompatActivity() {
     private fun addItemtoCart() {
         val database = FirebaseDatabase.getInstance().reference
         val userId = auth.currentUser?.uid ?: ""
-        var cartItemRef =
-            database.child("User").child("UserData").child(userId).child("CartItems").push()
+        var cartItemRef = database.child("User").child("UserData").child(userId).child("CartItems").push()
         val uniqueKey: String? = cartItemRef.key
         Log.d("key", uniqueKey.toString())
         //create cart item object
@@ -86,14 +84,10 @@ class FoodDetailsActivity : AppCompatActivity() {
             1,
             uniqueKey.toString()
         )
-
         //save data to cart item to firebase
-
         cartItemRef.setValue(cartItem).addOnSuccessListener {
             Toast.makeText(this, "Item Added Successfully in Cart", Toast.LENGTH_SHORT).show()
 
-
-            //  val uniqueKeyRef: DatabaseReference = cartItemRef.child(uniqueKey.toString())
         }.addOnFailureListener {
             Toast.makeText(this, "Item Not Added in Cart", Toast.LENGTH_SHORT).show()
         }
