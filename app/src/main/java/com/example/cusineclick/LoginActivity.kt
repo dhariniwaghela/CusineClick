@@ -2,11 +2,13 @@ package com.example.cusineclick
 
 import android.R
 import android.R.attr.name
+import android.app.Activity
 import android.app.AlertDialog
 import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.util.Log
 import android.widget.LinearLayout
 import android.widget.ProgressBar
 import android.widget.Toast
@@ -113,6 +115,31 @@ class LoginActivity : AppCompatActivity() {
     }
 
 
+
+    val handler = Handler<String> {
+        hideProgressDialog()
+            when(it){
+                "0" -> Toast.makeText(
+                    this@LoginActivity,
+                    "Account may be  used by another user",
+                    Toast.LENGTH_SHORT
+                ).show()
+                "1" -> {
+                        val sharedPreferences = getSharedPreferences("userPref", MODE_PRIVATE)
+                        val myEdit = sharedPreferences.edit()
+                        myEdit.putString("userId", auth.currentUser?.uid)
+                        myEdit.apply()
+                        val loginintent = Intent(this@LoginActivity, MainActivity::class.java)
+                        startActivity(loginintent)
+                }
+                "2" -> Toast.makeText(
+                    this@LoginActivity,
+                    "Account doesn't exist or Invalid credentials",
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
+    }
+
     private fun LoginUser() {
         var isUserExist = -1
         auth.signInWithEmailAndPassword(email, password).addOnCompleteListener { task ->
@@ -122,47 +149,37 @@ class LoginActivity : AppCompatActivity() {
                 val valueEventListener = object : ValueEventListener {
                     override fun onDataChange(dataSnapshot: DataSnapshot) {
                         for (ds in dataSnapshot.children) {
-                            var userModel = ds.getValue(UserModel::class.java)!!
-                            isUserExist = if(userModel!!.userId != null && ds.key == userModel!!.userId) 1 else 0
-                            break
+                            val userModel = ds.getValue(UserModel::class.java)!!
+                            if(userModel.userId != null && ds.key == auth.currentUser?.uid){
+                                isUserExist = 1
+                                handler.call(isUserExist.toString())
+                                break
+                            }
+                        }
+                        if(isUserExist == -1){
+                            isUserExist = 2
+                            handler.call(isUserExist.toString())
                         }
                     }
                     override fun onCancelled(databaseError: DatabaseError) {
                         isUserExist = 0
+                        handler.call(isUserExist.toString())
                     }
                 }
                 userDataReference.addListenerForSingleValueEvent(valueEventListener)
             } else {
                 isUserExist = 2
+                handler.call(isUserExist.toString())
+
             }
         }
 
-        Handler(Looper.getMainLooper()).postDelayed({
-            hideProgressDialog()
-            when(isUserExist){
-                0 -> Toast.makeText(
-                    this@LoginActivity,
-                    "Account may be  used by another user",
-                    Toast.LENGTH_SHORT
-                ).show()
-                1 -> {
-                        val sharedPreferences = getSharedPreferences("userPref", MODE_PRIVATE)
-                        val myEdit = sharedPreferences.edit()
-                        myEdit.putString("userId", auth.currentUser?.uid)
-                        myEdit.apply()
-                        val loginintent = Intent(this@LoginActivity, MainActivity::class.java)
-                        startActivity(loginintent)
-                }
-                2 -> Toast.makeText(
-                    this@LoginActivity,
-                    "Account doesn't exist or Invalid credentials",
-                    Toast.LENGTH_SHORT
-                ).show()
+    }
 
-            }
-        }, 4500) //millis
-
+    fun interface Handler<S> {
+        fun call(String: S);
     }
 }
+
 
 
