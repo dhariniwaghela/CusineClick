@@ -131,7 +131,6 @@ class SignUpActivity : AppCompatActivity() {
 
     private fun createAccount(email: String, password: String) {
         auth.createUserWithEmailAndPassword(email, password).addOnCompleteListener { task ->
-
             if (task.isSuccessful) {
                 Toast.makeText(this, "Account Created Successfully", Toast.LENGTH_SHORT).show()
                 saveUserData()
@@ -157,9 +156,8 @@ class SignUpActivity : AppCompatActivity() {
             username = binding.editTextName.text.toString()
             email = binding.editTextTextEmailAddress.text.toString().trim()
             password = binding.editTextPassword.text.toString().trim()
-
-            val user = UserModel(username, email, password,null,null,null)
             val userId = FirebaseAuth.getInstance().currentUser!!.uid
+            val user = UserModel(userId,username, email, password,null,null,null)
             //save user data
             database.child("User").child("UserData").child(userId).setValue(user)
 

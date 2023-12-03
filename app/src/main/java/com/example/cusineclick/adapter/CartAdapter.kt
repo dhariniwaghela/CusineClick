@@ -1,9 +1,12 @@
 package com.example.cusineclick.adapter
 
+import android.app.AlertDialog
 import android.content.Context
+import android.content.DialogInterface
 import android.net.Uri
 import android.util.Log
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
@@ -63,7 +66,36 @@ class CartAdapter(private val context: Context) : RecyclerView.Adapter<CartAdapt
                 val uriString = cartitems[position].foodImage
                 val uri = Uri.parse(uriString)
                 Glide.with(context).load(uri).into(cartImage)
-                binding.minusButton.setImageResource(if (cartitems[position].foodItemQuantity == 1) R.drawable.delete else R.drawable.minus)
+
+                binding.deleteButton.visibility =
+                    if (cartitems[position].foodItemQuantity == 1) View.VISIBLE else
+                        View.GONE
+                binding.minusButton.visibility =
+                    if (cartitems[position].foodItemQuantity!! > 1) View.VISIBLE else
+                        View.GONE
+
+                deleteButton.setOnClickListener {
+                    AlertDialog.Builder(context)
+                        .setTitle("Alert")
+                        .setMessage("Do you want to remove this item from cart?")
+                        .setCancelable(false)
+                        .setPositiveButton(
+                            "Yes"
+                        ) { dialog, which ->
+                            if(cartitems.size > 0){
+                                cartItemRef.child(cartitems[position].cartItemId!!).removeValue()
+                                    .addOnSuccessListener {
+                                        notifyItemRemoved(position)
+                                        cartitems.removeAt(position)
+                                        notifyDataSetChanged()
+                                    }.addOnFailureListener {
+                                        Log.d("error", "item not deleted")
+                                    }
+                            }
+                        }.setNegativeButton(
+                            "Cancel"
+                        ) { dialog, which -> dialog!!.dismiss() }.show()
+                }
 
                 minusButton.setOnClickListener {
                     if (cartitems[position].foodItemQuantity!! > 1) {
@@ -74,37 +106,26 @@ class CartAdapter(private val context: Context) : RecyclerView.Adapter<CartAdapt
                         notifyItemChanged(position)
                         cartItemRef.child(cartitems[position].cartItemId!!)
                             .setValue(cartitems[position])
-
-                    } else if (cartitems[position].foodItemQuantity == 1) {
-                        cartItemRef.child(cartitems[position].cartItemId!!).removeValue()
-                            .addOnSuccessListener {
-                                notifyItemRemoved(position)
-                                cartitems.removeAt(position)
-                            }.addOnFailureListener {
-                                Log.d("error", "item not deleted")
-                            }
-
                     }
                 }
 
 
-                plusButton.setOnClickListener {
+                    plusButton.setOnClickListener {
 
-                    if (cartitems[position].foodItemQuantity!! < 10) {
-                        cartitems[position].foodItemQuantity =
-                            cartitems[position].foodItemQuantity?.plus(1)
-                        notifyItemChanged(position)
-                        cartItemRef.child(cartitems[position].cartItemId!!)
-                            .setValue(cartitems[position])
+                        if (cartitems[position].foodItemQuantity!! < 10) {
+                            cartitems[position].foodItemQuantity =
+                                cartitems[position].foodItemQuantity?.plus(1)
+                            notifyItemChanged(position)
+                            cartItemRef.child(cartitems[position].cartItemId!!)
+                                .setValue(cartitems[position])
 
-                    } else {
-                        // do not add more than 10 items
+                        } else {
+                            // do not add more than 10 items
+                        }
+
                     }
 
                 }
-
-            }
-
         }
     }
 }
