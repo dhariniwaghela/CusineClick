@@ -47,12 +47,8 @@ class EditProfileActivity : AppCompatActivity() {
                     binding.editTextAddress.setText(userinfo.location)
                     binding.editTextCity.setText(userinfo.city)
                     val imageUrl = userinfo.imgUri.toString()
-                    if (imageUrl == null) {
-                        binding.addprofileImage.setImageResource(R.drawable.profile)
-                    } else {
-                        Glide.with(this@EditProfileActivity).load(imageUrl)
-                            .into(binding.addprofileImage)
-                    }
+                    Glide.with(this@EditProfileActivity).load(imageUrl).placeholder(R.drawable.profile).error(R.drawable.profile)
+                        .into(binding.addprofileImage)
                 }
 
             }

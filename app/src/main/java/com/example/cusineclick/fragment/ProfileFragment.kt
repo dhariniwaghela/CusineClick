@@ -1,5 +1,6 @@
 package com.example.cusineclick.Fragment
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -55,6 +56,8 @@ class ProfileFragment : Fragment() {
 
         binding.btnLogout.setOnClickListener(View.OnClickListener {
             auth!!.signOut()
+            val preferenceManager = activity?.getSharedPreferences("userPref", Context.MODE_PRIVATE)
+            preferenceManager?.edit()?.clear()?.apply()
             val intent = Intent(activity, StartActivity::class.java)
             startActivity(intent)
             //logout but not kill fragment
@@ -68,23 +71,21 @@ class ProfileFragment : Fragment() {
     private fun getUserData() {
         databaseReference.child(uid).addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
-                userinfo = snapshot.getValue(UserModel::class.java)!!
-                binding.textViewName.setText(userinfo.name)
-                binding.textViewEmail.setText(userinfo.email)
-                if(userinfo.location.toString() == null || userinfo.city.toString()==null){
-                    binding.textViewAddress.text = ""
+                if(snapshot.getValue(UserModel::class.java) != null){
+                    userinfo = snapshot.getValue(UserModel::class.java)!!
+                    binding.textViewName.setText(userinfo.name)
+                    binding.textViewEmail.setText(userinfo.email)
+
+                    if(userinfo.location != null && userinfo.location!!.isNotEmpty() && userinfo.city != null && userinfo.city!!.isNotEmpty()){
+                        binding.textViewAddress.text = "${userinfo.location},${userinfo.city}"
+                    }
+                    else {
+                        binding.textViewAddress.text = ""
+                    }
+                    val imageUrl = userinfo.imgUri
+                    activity?.let { Glide.with(it).load(imageUrl).placeholder(R.drawable.profile).error(R.drawable.profile).into(binding.profileImage) }
                 }
-                else {
-                    binding.textViewAddress.text = "${userinfo.location},${userinfo.city}"
-                }
-                val imageUrl = userinfo.imgUri
-                if(imageUrl!= null) {
-                    Glide.with(requireContext()).load(imageUrl).into(binding.profileImage)
-                }
-                else
-                {
-                    binding.profileImage.setImageResource(R.drawable.profile)
-                }
+
             }
 
             override fun onCancelled(error: DatabaseError) {

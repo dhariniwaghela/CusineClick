@@ -90,11 +90,20 @@
                     android:text="1" />
 
                 <ImageButton
-                    android:id="@+id/minusButton"
+                    android:id="@+id/deleteButton"
                     android:layout_width="40dp"
                     android:layout_height="40dp"
                     android:background="@color/text_shadow_white"
                     android:src="@drawable/delete"
+                    />
+
+                <ImageButton
+                    android:visibility="gone"
+                    android:id="@+id/minusButton"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:background="@color/text_shadow_white"
+                    android:src="@drawable/minus"
                     />
 
             </LinearLayout>
