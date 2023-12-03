@@ -1,18 +1,14 @@
 package com.example.cusineclick
 
 import android.R
-import android.R.attr.name
-import android.app.Activity
 import android.app.AlertDialog
 import android.content.Intent
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
-import android.util.Log
 import android.widget.LinearLayout
 import android.widget.ProgressBar
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.example.cusineclick.LoginActivity.Handler
 import com.example.cusineclick.databinding.ActivityLoginBinding
 import com.example.cusineclick.model.UserModel
 import com.google.firebase.auth.FirebaseAuth
@@ -32,7 +28,6 @@ class LoginActivity : AppCompatActivity() {
     private lateinit var database: FirebaseDatabase
     private lateinit var progressAlertDialog: AlertDialog
 
-    val CUSTOM_PREF_NAME = "User_data"
     private val binding: ActivityLoginBinding by lazy {
         ActivityLoginBinding.inflate(layoutInflater)
     }
@@ -96,7 +91,7 @@ class LoginActivity : AppCompatActivity() {
     private fun createProgressDialog(currentActivity: AppCompatActivity): AlertDialog {
         val vLayout = LinearLayout(currentActivity)
         vLayout.orientation = LinearLayout.VERTICAL
-        vLayout.setPadding(50, 50, 50, 50)
+        vLayout.setPadding(10, 10, 10, 10)
         vLayout.addView(ProgressBar(currentActivity, null, R.attr.progressBarStyleLarge))
         return AlertDialog.Builder(currentActivity)
             .setCancelable(false)
