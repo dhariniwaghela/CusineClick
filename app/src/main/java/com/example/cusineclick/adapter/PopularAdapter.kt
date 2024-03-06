@@ -56,6 +56,8 @@ class PopularAdapter(
                 putExtra("MenuItemPrice", popularMenuItem.itemPrice)
                 putExtra("MenuItemCategory", popularMenuItem.itemCategory)
                 putExtra("MenuItemCalories", popularMenuItem.itemCalories)
+                putExtra("RestaurantName",popularMenuItem.restaurantName)
+                putExtra("RestaurantId",popularMenuItem.restaurantId)
             }
             //start activity
             requireContext.startActivity(intent)

@@ -1,8 +1,10 @@
 package com.example.cusineclick.adapter
 import android.content.Context
+import android.net.Uri
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.example.cusineclick.databinding.NotificationItemBinding
 import com.example.cusineclick.model.BannerInfo
 
@@ -33,6 +35,8 @@ class NotificationAdapter(private val requireContext: Context) : RecyclerView.Ad
             val banneritem = notification[position]
             binding.apply {
                 notificationtext.text = banneritem.bannerDescription
+                val uri = Uri.parse(banneritem.bannerImage)
+                Glide.with(requireContext).load(uri).into(notificationimg)
             }
         }
 

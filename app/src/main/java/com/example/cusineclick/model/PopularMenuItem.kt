@@ -9,6 +9,8 @@ data class PopularMenuItem(
     val itemIngredients:String?=null,
     val itemCategory:String?=null,
     val itemCalories:String?=null,
+    val restaurantName:String?=null,
+    val restaurantId: String?=null
 )
 
 

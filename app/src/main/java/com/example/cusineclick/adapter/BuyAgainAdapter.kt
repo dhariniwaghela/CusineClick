@@ -6,9 +6,6 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.cusineclick.databinding.BuyAgainItemBinding
 import com.example.cusineclick.model.OrderItem
-import com.google.firebase.database.DatabaseReference
-import com.google.firebase.database.FirebaseDatabase
-import java.text.DecimalFormat
 
 class BuyAgainAdapter(private val context: Context) : RecyclerView.Adapter<BuyAgainAdapter.BuyAgainViewHolder>()  {
 
@@ -33,9 +30,9 @@ class BuyAgainAdapter(private val context: Context) : RecyclerView.Adapter<BuyAg
 
     inner class BuyAgainViewHolder(private val binding: BuyAgainItemBinding):RecyclerView.ViewHolder(binding.root) {
         fun bind(position: Int) {
-            val df = DecimalFormat("0.00")
-            binding.tvTotal.text = df.format(orderItems[position].OrderAmount)
-            binding.tvRestName.text = "Cuisine Click Order"
+            //val df = DecimalFormat("0.00")
+            binding.tvTotal.text = orderItems[position].OrderAmount.toString()
+            binding.tvRestName.text = orderItems[position].OrderRestaurantName
         }
 
     }

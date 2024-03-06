@@ -6,11 +6,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.cusineclick.R
 import com.example.cusineclick.adapter.BuyAgainAdapter
-import com.example.cusineclick.adapter.CartAdapter
 import com.example.cusineclick.databinding.FragmentHistoryBinding
-import com.example.cusineclick.model.CartItem
 import com.example.cusineclick.model.OrderItem
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
@@ -58,11 +55,14 @@ class HistoryFragment : Fragment() {
         database = FirebaseDatabase.getInstance()
         userId = auth.currentUser?.uid ?: ""
         orderhistoryref =
-            database.reference.child("Order").child(userId).child("OrderHistory")
+            database.reference.child("Order").child(userId)
         orderhistoryref.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 for (ordersnapshot in snapshot.children) {
                     val orderItem = ordersnapshot.getValue(OrderItem::class.java)
+                    if (orderItem != null) {
+                        orderItem.OrderRestaurantName= ordersnapshot.key
+                    }
                     orderItem?.let {
                         orderItems.add(it)
                     }

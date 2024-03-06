@@ -51,4 +51,13 @@
     <string name="ingredients">
         tomatoes \nonions \nmushrooms
     </string>
+
+    <string name="restaurant_time">
+        $0.99 Delivery Fee : 15 - 30 min
+    </string>
+
+    <string name="timeanddelivery">
+         $0.99 Delivery Fee  |   15 - 30 min
+    </string>
+
 </resources>

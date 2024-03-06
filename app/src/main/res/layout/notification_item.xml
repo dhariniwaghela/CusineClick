@@ -1,50 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<LinearLayout
+xmlns:android="http://schemas.android.com/apk/res/android"
+android:layout_width="match_parent"
+android:orientation="vertical"
+android:layout_height="150dp"
+android:weightSum="2.5"
+android:padding="10dp"
+xmlns:app="http://schemas.android.com/apk/res-auto">
+
+<androidx.cardview.widget.CardView
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:background="@color/white"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
-
-    <androidx.cardview.widget.CardView
+    android:layout_height="0dp"
+    android:layout_weight="2"
+    app:cardCornerRadius="15dp"
+    android:layout_gravity="center_vertical"
+    android:layout_marginStart="10dp"
+    android:layout_marginEnd="10dp">
+    <ImageView
+        android:id="@+id/notificationimg"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        tools:ignore="MissingConstraints"
+        android:layout_height="match_parent"
+        android:scaleType="centerCrop"
         android:elevation="5dp"
-        android:layout_margin="10dp">
+        android:src="@drawable/banner1" />
+</androidx.cardview.widget.CardView>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center"
-            android:weightSum="3"
-            android:orientation="horizontal">
-
-
-                <ImageView
-                    android:id="@+id/notificationimg"
-                    android:layout_width="35dp"
-                    android:layout_height="35dp"
-                    android:layout_weight="0.1"
-                    android:src="@drawable/deal"
-                    />
-
-
-
-            <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:text="Notification Details"
-                   android:layout_weight="2.9"
-                    android:id="@+id/notificationtext"
-                    android:fontFamily="@font/lato"
-                    android:textSize="16sp"
-                    android:gravity="center_vertical"
-                    android:layout_marginStart="8dp"
-                    android:textColor="@color/black"/>
-
-        </LinearLayout>
-
-    </androidx.cardview.widget.CardView>
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="0dp"
+    android:layout_marginTop="10dp"
+    android:layout_marginStart="12dp"
+    android:orientation="vertical"
+    android:layout_weight="0.5">
+    <TextView
+        android:id="@+id/notificationtext"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/lato_bold"
+        android:text="offer Details"
+        android:textSize="18sp"
+        android:layout_gravity="center"
+        android:textColor="@color/black"
+        />
+</LinearLayout>
+</LinearLayout>

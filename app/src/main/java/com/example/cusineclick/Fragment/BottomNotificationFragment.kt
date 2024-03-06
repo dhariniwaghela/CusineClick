@@ -1,4 +1,4 @@
-package com.example.cusineclick.fragment
+package com.example.cusineclick.Fragment
 
 import android.os.Bundle
 import android.view.LayoutInflater

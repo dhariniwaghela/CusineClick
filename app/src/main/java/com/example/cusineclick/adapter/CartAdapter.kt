@@ -9,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.example.cusineclick.Fragment.CartFragments
 import com.example.cusineclick.databinding.CartItemBinding
 import com.example.cusineclick.model.CartItem
 import com.google.firebase.auth.FirebaseAuth
@@ -16,7 +17,13 @@ import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 
 
-class CartAdapter(private val context: Context) : RecyclerView.Adapter<CartAdapter.CartViewHolder>() {
+class CartAdapter(
+    private val context: Context,
+    private val restaurantName: String?,
+    private val cartFragment: CartFragments
+) :
+    RecyclerView.Adapter<CartAdapter.CartViewHolder>() {
+
 
 
     private var cartitems: ArrayList<CartItem> = ArrayList()
@@ -35,7 +42,7 @@ class CartAdapter(private val context: Context) : RecyclerView.Adapter<CartAdapt
     init {
         val database = FirebaseDatabase.getInstance()
         val userId = auth.currentUser?.uid ?: ""
-        cartItemRef = database.reference.child("User").child("UserData").child(userId).child("CartItems")
+        cartItemRef = database.reference.child("User").child("UserData").child(userId).child("Cart")
     }
 
 
@@ -65,6 +72,8 @@ class CartAdapter(private val context: Context) : RecyclerView.Adapter<CartAdapt
                 val uri = Uri.parse(uriString)
                 Glide.with(context).load(uri).into(cartImage)
 
+
+
                 binding.deleteButton.visibility =
                     if (cartitems[position].foodItemQuantity == 1) View.VISIBLE else
                         View.GONE
@@ -79,14 +88,18 @@ class CartAdapter(private val context: Context) : RecyclerView.Adapter<CartAdapt
                         .setPositiveButton(
                             "Yes"
                         ) { dialog, which ->
-                            if(cartitems.size > 0){
-                                cartItemRef.child(cartitems[position].cartItemId!!).removeValue()
-                                    .addOnSuccessListener {
-                                        notifyItemRemoved(position)
-                                        cartitems.removeAt(position)
-                                        notifyDataSetChanged()
-                                    }.addOnFailureListener {
-                                        Log.d("error", "item not deleted")
+                            if (cartitems.size > 0) {
+                                    if (restaurantName != null) {
+                                        cartItemRef.child(restaurantName)
+                                            .child(cartitems[position].cartItemId!!).removeValue()
+                                            .addOnSuccessListener {
+                                                notifyItemRemoved(position)
+                                                cartitems.removeAt(position)
+                                                notifyDataSetChanged()
+                                                cartFragment.retriveCartItems()
+                                            }.addOnFailureListener {
+                                                Log.d("error", "item not deleted")
+                                            }
                                     }
                             }
                         }.setNegativeButton(
@@ -101,31 +114,42 @@ class CartAdapter(private val context: Context) : RecyclerView.Adapter<CartAdapt
                                 1
                             )
                         notifyItemChanged(position)
-                        cartItemRef.child(cartitems[position].cartItemId!!)
-                            .setValue(cartitems[position])
+                        if (restaurantName != null) {
+                            cartItemRef.child(restaurantName).child(cartitems[position].cartItemId!!)
+                                .setValue(cartitems[position])
+                        }
                     }
                 }
 
 
-                    plusButton.setOnClickListener {
+                plusButton.setOnClickListener {
 
-                        if (cartitems[position].foodItemQuantity!! < 10) {
-                            cartitems[position].foodItemQuantity =
-                                cartitems[position].foodItemQuantity?.plus(1)
-                            notifyItemChanged(position)
-                            cartItemRef.child(cartitems[position].cartItemId!!)
+                    if (cartitems[position].foodItemQuantity!! < 10) {
+                        cartitems[position].foodItemQuantity =
+                            cartitems[position].foodItemQuantity?.plus(1)
+                        notifyItemChanged(position)
+                        if (restaurantName != null) {
+                            cartItemRef.child(restaurantName).child(cartitems[position].cartItemId!!)
                                 .setValue(cartitems[position])
-
-                        } else {
-                            // do not add more than 10 items
                         }
 
+                    } else {
+                        // do not add more than 10 items
                     }
 
                 }
+
+            }
         }
+
+
     }
+
 }
+
+
+
+
 
 
 

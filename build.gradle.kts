@@ -2,7 +2,7 @@ buildscript {
     val kotlin_version by extra("2.0.0-Beta1")
     dependencies {
 
-        classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version")
+        classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:2.0.0-Beta2")
         classpath("com.google.gms:google-services:4.4.0")
     }
     repositories {

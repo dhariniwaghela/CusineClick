@@ -9,5 +9,7 @@ data class CartItem(
     var foodItemCalories: String? = null,
     var foodImage: String? = null,
     var foodItemQuantity: Int? = null,
-    var cartItemId:String?= null
+    var cartItemId:String?= null,
+    var restaurantName:String?= null,
+    var restaurantId:String?=null
 )

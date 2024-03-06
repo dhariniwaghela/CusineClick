@@ -1,7 +1,6 @@
-package com.example.cusineclick.fragment
+package com.example.cusineclick.Fragment
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.LinearLayout
@@ -53,6 +52,7 @@ class MenuBotomSheetFragment : BottomSheetDialogFragment() {
                     val menuItem = foodsnapshot.getValue(MenuItem::class.java)
                     menuItem?.let {
                         menuItems.add(it)
+
                     }
                     //once data add set it to adapter
                     adapter.updateList(menuItems)

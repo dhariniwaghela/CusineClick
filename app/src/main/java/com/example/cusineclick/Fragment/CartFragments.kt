@@ -1,19 +1,16 @@
 package com.example.cusineclick.Fragment
 
-import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.cusineclick.CheckOutActivity
-import com.example.cusineclick.adapter.CartAdapter
+import com.example.cusineclick.adapter.CartRestaurantAdapter
 import com.example.cusineclick.databinding.FragmentCartBinding
 import com.example.cusineclick.model.CartItem
-import com.example.cusineclick.model.MenuItem
+import com.example.cusineclick.model.CartRestaurantItem
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -21,15 +18,15 @@ import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 
-class CartFragment : Fragment() {
+class CartFragments : Fragment()  {
 
     private lateinit var binding: FragmentCartBinding
 
     private lateinit var auth: FirebaseAuth
     private lateinit var database: FirebaseDatabase
     private lateinit var userId: String
-    private lateinit var cartItems: MutableList<CartItem>
-    private lateinit var cartAdapter: CartAdapter
+    private lateinit var cartRestaurantItems: MutableList<CartRestaurantItem>
+    private lateinit var cartRestaurantAdapter: CartRestaurantAdapter
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -48,12 +45,13 @@ class CartFragment : Fragment() {
         //database reference to firebase
         database = FirebaseDatabase.getInstance()
         userId = auth.currentUser?.uid ?: ""
-        cartItems = mutableListOf()
+        cartRestaurantItems = mutableListOf()
 
         setAdapter()
 
         retriveCartItems()
 
+        /*
         binding.btnProceed.setOnClickListener(View.OnClickListener {
             //get order items details before procceeding to check out
 
@@ -61,45 +59,75 @@ class CartFragment : Fragment() {
             val intent = Intent(requireContext(), CheckOutActivity::class.java)
             intent.putExtra("total", total)
             startActivity(intent)
-
         })
+
+         */
+
         return binding.root
     }
 
+
     private fun getOrderItemDetails(): Double {
         var total = 0.0
-        if (cartItems.size > 0) {
-            for (cartitem in cartItems) {
-                var price = cartitem.foodItemPrice?.toDouble()
-                var itemQty = cartitem.foodItemQuantity?.toDouble()
-                if (price != null) {
-                    var itemIndPrice = itemQty?.times(price);
-                    if (itemIndPrice != null) {
-                        total += itemIndPrice
+
+        if (cartRestaurantItems.size > 0) {
+            for(cartrestaurantitem in cartRestaurantItems) {
+
+                if (cartrestaurantitem.cartItem.size > 0) {
+                    for (cartitem in cartrestaurantitem.cartItem) {
+                        var price = cartitem.foodItemPrice?.toDouble()
+                        var itemQty = cartitem.foodItemQuantity?.toDouble()
+                        if (price != null) {
+                            var itemIndPrice = itemQty?.times(price);
+                            if (itemIndPrice != null) {
+                                total += itemIndPrice
+                            }
+                        }
                     }
                 }
             }
         }
+
         return total
         Log.d("total", total.toString())
+
     }
 
 
-    private fun retriveCartItems() {
+     fun retriveCartItems() {
+         cartRestaurantItems.clear()
         //database reference to firebase
         database = FirebaseDatabase.getInstance()
         userId = auth.currentUser?.uid ?: ""
-        val cartItemRef: DatabaseReference = database.reference.child("User").child("UserData").child(userId).child("CartItems")
-        cartItems = mutableListOf()
+        val cartItemRef: DatabaseReference = database.reference.child("User").child("UserData").child(userId).child("Cart")
         cartItemRef.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
+
                 for (foodsnapshot in snapshot.children) {
-                    val cartItem = foodsnapshot.getValue(CartItem::class.java)
-                    cartItem?.let {
-                        cartItems.add(it)
+                    var cartItemArray= ArrayList<CartItem>()
+                    for(restaurantitem in foodsnapshot.children) {
+
+                        val cartItem = restaurantitem.getValue(CartItem::class.java)
+                        if (cartItem != null) {
+                            cartItemArray.add(cartItem)
+                        }
+
                     }
-                    cartAdapter.updateList(cartItems)
+                    val cartRestaurantItem = CartRestaurantItem(
+                        restaurantName = foodsnapshot.key,
+                        cartItem = cartItemArray
+                    )
+                    cartRestaurantItem?.let {
+                        cartRestaurantItems.add(it)
+                    }
+
+
+
                 }
+                Log.d("restaurantitem",cartRestaurantItems.size.toString())
+
+                     cartRestaurantAdapter.updateCartRestaurantList(cartRestaurantItems)
+
             }
 
             override fun onCancelled(error: DatabaseError) {
@@ -112,17 +140,22 @@ class CartFragment : Fragment() {
     }
 
     private fun setAdapter() {
-        cartAdapter = CartAdapter(
-            requireContext()
+
+        cartRestaurantAdapter = CartRestaurantAdapter(
+            requireContext(),this
         )
         binding.cartRecyclerView.layoutManager =
             LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
-        binding.cartRecyclerView.adapter = cartAdapter
+        binding.cartRecyclerView.adapter = cartRestaurantAdapter
 
     }
+
+
 
     companion object {
 
     }
+
+
 }
 

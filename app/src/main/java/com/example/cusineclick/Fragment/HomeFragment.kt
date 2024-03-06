@@ -1,30 +1,29 @@
-package com.example.cusineclick.fragment
+package com.example.cusineclick.Fragment
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.denzcoskun.imageslider.constants.ScaleTypes
-import com.denzcoskun.imageslider.models.SlideModel
-import com.example.cusineclick.adapter.PopularAdapter
+import com.example.cusineclick.R
+import com.example.cusineclick.adapter.RestaurantAdapter
 import com.example.cusineclick.databinding.FragmentHomeBinding
-import com.example.cusineclick.model.PopularMenuItem
+import com.example.cusineclick.model.Restaurant
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
-import java.util.Random
 
 
 class HomeFragment : Fragment() {
 
     private lateinit var binding: FragmentHomeBinding
     private lateinit var database: FirebaseDatabase
-    private lateinit var popularitems: MutableList<PopularMenuItem>
+  //  private lateinit var popularitems: MutableList<PopularMenuItem>
+
+    private lateinit var restaurantlist: MutableList<Restaurant>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,16 +39,39 @@ class HomeFragment : Fragment() {
         binding = FragmentHomeBinding.inflate(inflater, container, false)
         database = FirebaseDatabase.getInstance()
 
+
+        //search view intent
+        binding.tvseachView.setOnClickListener{
+            
+            val transaction = requireActivity().supportFragmentManager.beginTransaction()
+            transaction.replace(R.id.fragmentContainerView, SearchFragment())
+            transaction.addToBackStack("abc")
+            transaction.commit()
+
+
+
+        }
+
+
         binding.tvmenu.setOnClickListener {
             val bottomSheetdialog = MenuBotomSheetFragment()
             bottomSheetdialog.show(parentFragmentManager, tag)
         }
-        retrievePopularMenuItems()
+
+        //retrive all restaurants
+        retriveRestaurantList()
         return binding.root
+
+        //popular menu item retriving method
+        // retrievePopularMenuItems()
+
     }
+
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        /*
         val imageList = ArrayList<SlideModel>()
         val imageSlider = binding.imageSlider
         database.reference.child("Banner")
@@ -64,8 +86,44 @@ class HomeFragment : Fragment() {
                     Toast.makeText(requireContext(),error.message,Toast.LENGTH_SHORT).show()
                 }
 
-            }) }
+            })
 
+         */
+    }
+
+    //showing all restaurant list
+    private fun retriveRestaurantList() {
+
+        val databaseReference: DatabaseReference = database.reference.child("Admin").child("AdminData")
+        restaurantlist = mutableListOf()
+        databaseReference.addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                for (restaurantsnapshot in snapshot.children) {
+                    val restaurants = restaurantsnapshot.getValue(Restaurant::class.java)
+                    restaurants?.let {
+                        restaurantlist.add(it)
+                    }
+                    //display restaurants
+                    setRestaurantAdapter(restaurantlist)
+                }
+            }
+
+
+            override fun onCancelled(error: DatabaseError) {
+                TODO("Not yet implemented")
+            }
+
+        })
+
+    }
+    private fun setRestaurantAdapter(restaurants: List<Restaurant>) {
+        val adapter = RestaurantAdapter(restaurants, requireContext())
+        binding.popularRecyclerView.layoutManager = LinearLayoutManager(requireContext())
+        binding.popularRecyclerView.adapter = adapter
+    }
+
+
+    /*
     private fun retrievePopularMenuItems() {
 
         val foodRef: DatabaseReference = database.reference.child("menu")
@@ -85,7 +143,7 @@ class HomeFragment : Fragment() {
 
 
             override fun onCancelled(error: DatabaseError) {
-                TODO("Not yet implemented")
+
             }
 
         })
@@ -111,6 +169,9 @@ class HomeFragment : Fragment() {
         binding.popularRecyclerView.layoutManager = LinearLayoutManager(requireContext())
         binding.popularRecyclerView.adapter = adapter
     }
+
+
+     */
 
 
 }

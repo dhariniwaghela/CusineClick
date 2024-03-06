@@ -9,7 +9,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
 import androidx.navigation.ui.setupWithNavController
 import com.example.cusineclick.databinding.ActivityMainBinding
-import com.example.cusineclick.fragment.BottomNotificationFragment
+import com.example.cusineclick.Fragment.BottomNotificationFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot

@@ -1,15 +1,10 @@
-package com.example.cusineclick.fragment
+package com.example.cusineclick.Fragment
 
-import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.activity.addCallback
-import androidx.core.content.ContextCompat
-import androidx.core.content.ContextCompat.startActivity
-import com.example.cusineclick.CheckOutActivity
 import com.example.cusineclick.MainActivity
 import com.example.cusineclick.databinding.FragmentConfirmOrderBottomSheetBinding
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment

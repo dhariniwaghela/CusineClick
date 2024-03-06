@@ -17,12 +17,12 @@
         tools:layout="@layout/fragment_profile" />
     <fragment
         android:id="@+id/homeFragment"
-        android:name="com.example.cusineclick.fragment.HomeFragment"
+        android:name="com.example.cusineclick.Fragment.HomeFragment"
         android:label="fragment_home"
         tools:layout="@layout/fragment_home" />
     <fragment
         android:id="@+id/cartFragment"
-        android:name="com.example.cusineclick.Fragment.CartFragment"
+        android:name="com.example.cusineclick.Fragment.CartFragments"
         android:label="fragment_cart"
         tools:layout="@layout/fragment_cart" />
     <fragment

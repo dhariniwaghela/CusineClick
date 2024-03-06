@@ -20,6 +20,9 @@ class FoodDetailsActivity : AppCompatActivity() {
     private var foodCategory: String? = null
     private var foodCalories: String? = null
     private var foodPrice: String? = null
+    private var restaurantName : String? = null
+    private var restaurantId:String? = null
+
 
     private lateinit var auth: FirebaseAuth
 
@@ -39,6 +42,9 @@ class FoodDetailsActivity : AppCompatActivity() {
         foodCategory = intent.getStringExtra("MenuItemCategory")
         foodPrice = intent.getStringExtra("MenuItemPrice")
         foodimg = intent.getStringExtra("MenuItemImg")
+        restaurantName = intent.getStringExtra("RestaurantName")
+        restaurantId=intent.getStringExtra("RestaurantId")
+
 
 
         with(binding) {
@@ -48,6 +54,7 @@ class FoodDetailsActivity : AppCompatActivity() {
             tvFoodPrice.text = "CA $$foodPrice"
             tvFoodDescription.text = foodDesc
             tvFoodingredients.text = foodIngredients
+            tvRestaurantname.text = "From: $restaurantName"
             Glide.with(this@FoodDetailsActivity).load(Uri.parse(foodimg)).into(foodImage)
 
         }
@@ -69,7 +76,8 @@ class FoodDetailsActivity : AppCompatActivity() {
     private fun addItemtoCart() {
         val database = FirebaseDatabase.getInstance().reference
         val userId = auth.currentUser?.uid ?: ""
-        var cartItemRef = database.child("User").child("UserData").child(userId).child("CartItems").push()
+
+        var cartItemRef = database.child("User").child("UserData").child(userId).child("Cart").child(restaurantName.toString()).push()
         val uniqueKey: String? = cartItemRef.key
         Log.d("key", uniqueKey.toString())
         //create cart item object
@@ -82,8 +90,12 @@ class FoodDetailsActivity : AppCompatActivity() {
             foodCalories.toString(),
             foodimg.toString(),
             1,
-            uniqueKey.toString()
+            uniqueKey.toString(),
+            restaurantName.toString(),
+            restaurantId.toString()
         )
+
+
         //save data to cart item to firebase
         cartItemRef.setValue(cartItem).addOnSuccessListener {
             Toast.makeText(this, "Item Added Successfully in Cart", Toast.LENGTH_SHORT).show()

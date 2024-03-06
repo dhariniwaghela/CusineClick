@@ -1,0 +1,8 @@
+<!-- res/drawable/line_background.xml -->
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:bottom="1dp">
+        <shape android:shape="rectangle">
+            <solid android:color="#C5C2C2" /> <!-- Set the color of the line -->
+        </shape>
+    </item>
+</layer-list>

@@ -2,10 +2,9 @@ package com.example.cusineclick
 
 import android.os.Bundle
 import android.util.Log
-import androidx.activity.addCallback
 import androidx.appcompat.app.AppCompatActivity
+import com.example.cusineclick.Fragment.ConfirmOrderBottomSheetFragment
 import com.example.cusineclick.databinding.ActivityCheckOutBinding
-import com.example.cusineclick.fragment.ConfirmOrderBottomSheetFragment
 import com.example.cusineclick.model.UserModel
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
@@ -59,8 +58,11 @@ class CheckOutActivity : AppCompatActivity() {
     }
 
     private fun transferdata() {
-        val destinationRef = database.child("Order").child(uid).child("OrderHistory").push()
-        val sourceRef= database.child("User").child("UserData").child(uid).child("CartItems")
+        val restaurantName = intent.getStringExtra("RestaurantName")
+        val destinationRef = database.child("Order").child(uid).child(restaurantName.toString())
+        val sourceRef= database.child("User").child("UserData").child(uid).child("Cart").child(
+            restaurantName.toString()
+        )
         sourceRef.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 if (dataSnapshot.exists()) {

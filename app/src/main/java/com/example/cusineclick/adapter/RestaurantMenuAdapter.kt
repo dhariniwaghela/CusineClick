@@ -9,14 +9,13 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.cusineclick.FoodDetailsActivity
-import com.example.cusineclick.databinding.MenuItemBinding
+import com.example.cusineclick.databinding.RestaurantSingleMenuItemBinding
 import com.example.cusineclick.model.MenuItem
 
-class MenuAdapter(private val requireContext: Context) :
-    RecyclerView.Adapter<MenuAdapter.MenuViewHolder>() {
+class RestaurantMenuAdapter (private val requireContext: Context) :
+    RecyclerView.Adapter<RestaurantMenuAdapter.RestaurantMenuViewHolder>() {
 
     private var menuitems: List<MenuItem> = mutableListOf()
-
 
     fun updateList(MenuItems: MutableList<MenuItem>) {
         menuitems = MenuItems
@@ -25,18 +24,18 @@ class MenuAdapter(private val requireContext: Context) :
     }
 
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MenuViewHolder {
-        val binding = MenuItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return MenuViewHolder(binding)
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RestaurantMenuViewHolder {
+        val binding = RestaurantSingleMenuItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        return RestaurantMenuViewHolder(binding)
     }
 
     override fun getItemCount(): Int = menuitems.size
 
-    override fun onBindViewHolder(holder: MenuViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: RestaurantMenuViewHolder, position: Int) {
         holder.bind(position)
     }
 
-    inner class MenuViewHolder(private val binding: MenuItemBinding) :
+    inner class RestaurantMenuViewHolder(private val binding: RestaurantSingleMenuItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
         init {
@@ -74,10 +73,11 @@ class MenuAdapter(private val requireContext: Context) :
         fun bind(position: Int) {
             val menuItem = menuitems[position]
             binding.apply {
-                menufoodName.text = menuItem.itemName
-                menuprice.text = "$${menuItem.itemPrice}"
+                tvRestItemName.text = menuItem.itemName
+                tvRestItemPrice.text = "CA $${menuItem.itemPrice}"
+                tvRestItemCalories.text = "CAL 0- ${menuItem.itemCalories}"
                 val uri = Uri.parse(menuItem.itemImage)
-                Glide.with(requireContext).load(uri).into(menuimage)
+                Glide.with(requireContext).load(uri).into(restItemImage)
 
             }
 
