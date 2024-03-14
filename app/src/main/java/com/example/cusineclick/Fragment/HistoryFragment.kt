@@ -15,6 +15,7 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
+import java.text.DecimalFormat
 
 class HistoryFragment : Fragment() {
     private lateinit var binding: FragmentHistoryBinding
@@ -60,13 +61,29 @@ class HistoryFragment : Fragment() {
             override fun onDataChange(snapshot: DataSnapshot) {
                 for (ordersnapshot in snapshot.children) {
                     val orderItem = ordersnapshot.getValue(OrderItem::class.java)
-                    if (orderItem != null) {
-                        orderItem.OrderRestaurantName= ordersnapshot.key
+                    for (restaurantSnapshot in ordersnapshot.children) {
+                        // Retrieve the restaurant name
+                        val restaurantName = restaurantSnapshot.key
+                        // Retrieve the order amount
+                        val orderAmount =
+                            restaurantSnapshot.child("OrderAmount").getValue(Double::class.java)
+
+                        val decimalFormat = DecimalFormat("#.##")
+                        decimalFormat.maximumFractionDigits = 2
+                        val formattedOrderAmount = decimalFormat.format(orderAmount)
+                        // Do something with the restaurant name and order amount
+                        if (restaurantName != null && orderAmount != null) {
+                            if (orderItem != null) {
+                                orderItem.OrderRestaurantName = restaurantName.toString()
+                                orderItem.OrderAmount = formattedOrderAmount
+                            }
+                        }
+
+                        orderItem?.let {
+                            orderItems.add(it)
+                        }
+                        buyAgainAdapter.updateList(orderItems)
                     }
-                    orderItem?.let {
-                        orderItems.add(it)
-                    }
-                    buyAgainAdapter.updateList(orderItems)
                 }
             }
 

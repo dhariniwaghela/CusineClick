@@ -78,7 +78,7 @@ class CartRestaurantAdapter(private val context: Context,private val cartFragmen
     }
 
     private fun getOrderItemDetails(cartItem: ArrayList<CartItem>): Double {
-        var total = 0.0
+                var total = 0.0
                 if (cartItem.size > 0) {
                     for (cartitem in cartItem) {
                         var price = cartitem.foodItemPrice?.toDouble()

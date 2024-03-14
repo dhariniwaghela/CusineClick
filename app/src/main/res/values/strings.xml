@@ -59,5 +59,6 @@
     <string name="timeanddelivery">
          $0.99 Delivery Fee  |   15 - 30 min
     </string>
+    <string name="default_notification_channel_id">channel</string>
 
 </resources>
