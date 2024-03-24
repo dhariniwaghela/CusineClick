@@ -13,8 +13,8 @@ import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
+import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.FirebaseApp
-import com.google.firebase.FirebaseOptions
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseAuthUserCollisionException
 import com.google.firebase.auth.GoogleAuthProvider
@@ -22,8 +22,7 @@ import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
-import com.google.firebase.ktx.app
-import com.google.firebase.ktx.initialize
+import com.google.firebase.messaging.FirebaseMessaging
 import java.util.regex.Pattern
 
 
@@ -34,6 +33,7 @@ class SignUpActivity : AppCompatActivity() {
     private lateinit var auth: FirebaseAuth
     private lateinit var database: DatabaseReference
     private lateinit var googleSingInClient: GoogleSignInClient
+
 
 
     private val binding: ActivitySignUpBinding by lazy {
@@ -152,14 +152,25 @@ class SignUpActivity : AppCompatActivity() {
         }
     }
         private fun saveUserData() {
-            //retrive data
-            username = binding.editTextName.text.toString()
-            email = binding.editTextTextEmailAddress.text.toString().trim()
-            password = binding.editTextPassword.text.toString().trim()
-            val userId = FirebaseAuth.getInstance().currentUser!!.uid
-            val user = UserModel(userId,username, email, password,null,null,null)
-            //save user data
-            database.child("User").child("UserData").child(userId).setValue(user)
+
+            var token = ""
+                FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener { task ->
+                if (!task.isSuccessful) {
+//                    Log.w(TAG, "Fetching FCM registration token failed", task.exception)
+                    return@OnCompleteListener
+                }
+
+                // Get new FCM registration token
+                token = task.result
+                    //retrive data
+                    username = binding.editTextName.text.toString()
+                    email = binding.editTextTextEmailAddress.text.toString().trim()
+                    password = binding.editTextPassword.text.toString().trim()
+                    val userId = FirebaseAuth.getInstance().currentUser!!.uid
+                    val user = UserModel(userId,username, email, password,null,null,null,token)
+                    //save user data
+                    database.child("User").child("UserData").child(userId).setValue(user)
+            })
 
         }
 

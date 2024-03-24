@@ -7,5 +7,6 @@ data class UserModel(
     val password: String? =null,
     var location:String?=null,
     var city:String?=null,
-    val imgUri:String?=null
+    val imgUri:String?=null,
+    val firebasetoken:String?=null
 )
