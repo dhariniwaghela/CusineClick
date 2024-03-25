@@ -11,6 +11,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.example.cusineclick.LoginActivity.Handler
 import com.example.cusineclick.databinding.ActivityLoginBinding
 import com.example.cusineclick.model.UserModel
+import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.DataSnapshot
@@ -18,6 +19,7 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import com.google.firebase.ktx.Firebase
+import com.google.firebase.messaging.FirebaseMessaging
 import java.util.regex.Pattern
 
 
@@ -136,16 +138,32 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun LoginUser() {
+
+        var token = ""
+        FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener { task ->
+            if (!task.isSuccessful) {
+//                    Log.w(TAG, "Fetching FCM registration token failed", task.exception)
+                return@OnCompleteListener
+            }
+
+            // Get new FCM registration token
+            token = task.result
+        })
+
         var isUserExist = -1
         auth.signInWithEmailAndPassword(email, password).addOnCompleteListener { task ->
             if (task.isSuccessful) {
                 database = FirebaseDatabase.getInstance()
-                val userDataReference = database.reference.child("User").child("UserData");
+                val userDataReference = database.reference.child("User").child("UserData")
                 val valueEventListener = object : ValueEventListener {
                     override fun onDataChange(dataSnapshot: DataSnapshot) {
                         for (ds in dataSnapshot.children) {
                             val userModel = ds.getValue(UserModel::class.java)!!
                             if(userModel.userId != null && ds.key == auth.currentUser?.uid){
+                                val tokenUpdateRef = userDataReference.child(auth.currentUser?.uid.toString())
+                                val taskMap: MutableMap<String, Any> = HashMap()
+                                taskMap["firebasetoken"] = token
+                                tokenUpdateRef.updateChildren(taskMap)
                                 isUserExist = 1
                                 handler.call(isUserExist.toString())
                                 break
