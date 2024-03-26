@@ -3,7 +3,6 @@ package com.example.cusineclick
 import android.annotation.SuppressLint
 import android.os.Bundle
 import android.util.Log
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.cusineclick.Firebase.FcmApi
 import com.example.cusineclick.Firebase.RequestNotification
@@ -61,6 +60,7 @@ class CheckOutActivity : AppCompatActivity() {
         binding.tvTotal.text = "CA$${df.format(total)}"
         binding.btncheckout.setOnClickListener {
             transferdata()
+            finish()
             /*
             val bottomSheetFragment = ConfirmOrderBottomSheetFragment()
             bottomSheetFragment.dialog?.setCancelable(false)
@@ -178,11 +178,7 @@ class CheckOutActivity : AppCompatActivity() {
                                                 if (response.isSuccessful) {
                                                     val fcmResponse = response.body()
                                                     // Handle successful response
-                                                    Toast.makeText(
-                                                        applicationContext,
-                                                        "Task",
-                                                        Toast.LENGTH_SHORT
-                                                    ).show()
+
                                                 } else {
                                                     // Handle error response
                                                 }

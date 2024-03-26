@@ -8,13 +8,12 @@ import android.os.Bundle
 import android.provider.Settings.ACTION_APPLICATION_DETAILS_SETTINGS
 import android.util.Log
 import android.view.View
-import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
 import androidx.navigation.ui.setupWithNavController
-import com.example.cusineclick.databinding.ActivityMainBinding
 import com.example.cusineclick.Fragment.BottomNotificationFragment
+import com.example.cusineclick.databinding.ActivityMainBinding
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.firebase.auth.FirebaseAuth
@@ -104,8 +103,7 @@ class MainActivity : AppCompatActivity() {
                     }
                 }
             } else {
-                Toast.makeText(applicationContext, "notification permission granted", Toast.LENGTH_SHORT)
-                    .show()
+               // Toast.makeText(applicationContext, "notification permission granted", Toast.LENGTH_SHORT).show()
             }
         }
 
